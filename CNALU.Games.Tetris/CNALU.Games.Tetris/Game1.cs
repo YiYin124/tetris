@@ -19,10 +19,20 @@ namespace CNALU.Games.Tetris
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Random random = new Random();
+
+        Texture2D backgroundTexture;
+        Texture2D blockTexture;
+        Texture2D gameBoxTexture;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -48,6 +58,9 @@ namespace CNALU.Games.Tetris
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            backgroundTexture = Content.Load<Texture2D>(@"Images\bg");
+            blockTexture = Content.Load<Texture2D>(@"Images\block");
+            gameBoxTexture = Content.Load<Texture2D>(@"Images\gamebox");
         }
 
         /// <summary>
@@ -84,6 +97,28 @@ namespace CNALU.Games.Tetris
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(backgroundTexture, Vector2.Zero, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+            spriteBatch.Draw(gameBoxTexture, Vector2.Zero, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 15; y++)
+                {
+                    spriteBatch.Draw(blockTexture, new Vector2(108 + x * 30, 57 + y * 30), new Rectangle(30 * random.Next(3), 30 * random.Next(2), 30, 30), Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                }
+            }
+
+            for (int x = 0; x < 6; x++)
+            {
+                for (int y = 0; y < 6; y++)
+                {
+                    spriteBatch.Draw(blockTexture, new Vector2(508 + x * 30, 57 + y * 30), new Rectangle(30 * random.Next(3), 30 * random.Next(2), 30, 30), Color.White, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
+                }
+            }
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
