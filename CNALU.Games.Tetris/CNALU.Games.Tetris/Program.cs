@@ -10,7 +10,7 @@ namespace CNALU.Games.Tetris
         /// </summary>
         static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
+            using (MainGame game = new MainGame())
             {
                 game.Run();
             }
