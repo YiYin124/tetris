@@ -22,6 +22,11 @@ namespace CNALU.Games.Tetris
         Texture2D blocksTexture;
         Texture2D gameBoxTexture;
 
+        DynamicTexture blockAnimationTexture;
+        Block testGameBlock;
+
+        GameBlock gameBlock;
+
         public GameComponentTetris(Game game)
             : base(game)
         {
@@ -47,6 +52,14 @@ namespace CNALU.Games.Tetris
             blocksTexture = Game.Content.Load<Texture2D>(@"Images/block");
             gameBoxTexture = Game.Content.Load<Texture2D>(@"Images/gamebox");
 
+            blockAnimationTexture = new DynamicTexture(Game.Content.Load<Texture2D>(@"Images/block"), new Vector2(3, 2), 30, 30, 3);
+            blockAnimationTexture.Play();
+
+            testGameBlock = new Block(blockAnimationTexture, Vector2.Zero);
+
+            gameBlock = new GameBlock(new System.Drawing.Size(10, 15), new Vector2(108.0F, 57.0F), Game.Content.Load<Texture2D>(@"Images/block"));
+            gameBlock.Test();
+
             base.LoadContent();
         }
 
@@ -57,6 +70,7 @@ namespace CNALU.Games.Tetris
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
+            gameBlock.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -66,6 +80,8 @@ namespace CNALU.Games.Tetris
             spriteBatch.Begin();
             spriteBatch.Draw(gameBoxTexture, Vector2.Zero, Color.White);
             spriteBatch.End();
+
+            gameBlock.Draw(spriteBatch, gameTime);
 
             base.Draw(gameTime);
         }
