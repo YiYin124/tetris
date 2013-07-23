@@ -23,7 +23,6 @@ namespace CNALU.Games.Tetris
         Texture2D gameBoxTexture;
 
         DynamicTexture blockAnimationTexture;
-        Block testGameBlock;
 
         GameBlock gameBlock;
 
@@ -54,8 +53,6 @@ namespace CNALU.Games.Tetris
 
             blockAnimationTexture = new DynamicTexture(Game.Content.Load<Texture2D>(@"Images/block"), new Vector2(3, 2), 30, 30, 3);
             blockAnimationTexture.Play();
-
-            testGameBlock = new Block(blockAnimationTexture, Vector2.Zero);
 
             gameBlock = new GameBlock(new System.Drawing.Size(10, 15), new Vector2(108.0F, 57.0F), Game.Content.Load<Texture2D>(@"Images/block"));
             gameBlock.Test();

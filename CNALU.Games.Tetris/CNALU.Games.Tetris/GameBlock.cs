@@ -136,10 +136,12 @@ namespace CNALU.Games.Tetris
 
         public void Test()
         {
-            PutGameBlock(new Vector2(8, 0), 1, 0);
+            PutBlock(Vector2.Zero, 1, 0);
+            PutBlock(new Vector2(1, 2), 1, 0);
+            // DeleteBlock(new Vector2(1, 0), 1, 0);
         }
 
-        int PutGameBlock(Vector2 position, int type, int index)
+        int PutBlock(Vector2 position, int type, int index)
         {
             // 检测是否可以落下
             // 检测是否会越界
@@ -163,8 +165,28 @@ namespace CNALU.Games.Tetris
             // 进行填充
             for (int x = 0; x < Shapes[type][index].GetLength(0); x++)
                 for (int y = 0; y < Shapes[type][index].GetLength(1); y++)
-                    panelGame[(int)position.X + x, (int)position.Y + y] |= Shapes[type][index][x, y];
+                    panelGame[(int)position.X + x, (int)position.Y + y] = Shapes[type][index][x, y];
 
+            return 0;
+        }
+
+        int DeleteBlock(Vector2 position, int type, int index)
+        {
+            // 检测是否会越界
+            if (((int)position.X + Shapes[type][index].GetLength(0) > panelGame.GetLength(0)) || ((int)position.Y + Shapes[type][index].GetLength(1) > panelGame.GetLength(1)))
+            {
+                return -1;
+            }
+
+            // 进行填充
+            for (int x = 0; x < Shapes[type][index].GetLength(0); x++)
+            {
+                for (int y = 0; y < Shapes[type][index].GetLength(1); y++)
+                {
+                    if (Shapes[type][index][x, y])
+                        panelGame[(int)position.X + x, (int)position.Y + y] = false;
+                }
+            }
             return 0;
         }
 
