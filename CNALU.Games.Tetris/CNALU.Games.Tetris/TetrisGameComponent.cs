@@ -39,6 +39,7 @@ namespace CNALU.Games.Tetris
             previewPanel = new Block[6, 6];
             previewPanelPosition = new Vector2(508.0F, 57.0F);
 
+
             base.Initialize();
         }
 
@@ -48,15 +49,15 @@ namespace CNALU.Games.Tetris
             gameBoxTexture = Game.Content.Load<Texture2D>("Images/gamebox");
             blockTexture = Game.Content.Load<Texture2D>("Images/block");
 
-            gamePanel[0, 0] = new Block(blockTexture, new Rectangle(0, 0, 30, 30));
-            gamePanel[0, 1] = new Block(blockTexture, new Rectangle(0, 0, 30, 30));
-
-            previewPanel[0, 0] = new Block(blockTexture, new Rectangle(0, 0, 30, 30));
-            previewPanel[1, 0] = new Block(blockTexture, new Rectangle(30, 0, 30, 30));
-            previewPanel[0, 1] = new Block(blockTexture, new Rectangle(30, 30, 30, 30));
-
-            gamePanel = GameBlock<IBlock>.Build(GameBlockShape.I, new Block(blockTexture, new Rectangle(0, 30, 30, 30)));
-            GameBlock<IBlock>.Rotate(ref gamePanel);
+            ComboBlock comboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(0, 0, 30, 30)), ComboBlockShape.L, Point.Zero, gamePanel);
+            comboBlock.Put(new Point(1, 1));
+            comboBlock.Put(new Point(1, 2));
+            comboBlock.Put(new Point(1, 3));
+            comboBlock.Put(new Point(2, 12));
+            comboBlock.Put(new Point(3, 12));
+            comboBlock.Put(new Point(4, 12));
+            comboBlock.Put(new Point(6, 12));
+            comboBlock.Put(new Point(7, 12));
             base.LoadContent();
         }
 
