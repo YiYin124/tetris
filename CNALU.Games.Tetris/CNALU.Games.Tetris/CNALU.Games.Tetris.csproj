@@ -74,13 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Block.cs" />
-    <Compile Include="DynamicTexture.cs" />
     <Compile Include="GameBlock.cs" />
-    <Compile Include="GameComponentTetris.cs" />
     <Compile Include="IBlock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="MainGame.cs" />
+    <Compile Include="TetrisGameComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

@@ -18,9 +18,10 @@ namespace CNALU.Games.Tetris
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        GameComponentTetris gameComponentTetris;
 
         Texture2D backgroundTexture;
+
+        GameComponent tetrisGameComponent;
 
         public MainGame()
         {
@@ -30,6 +31,9 @@ namespace CNALU.Games.Tetris
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferredBackBufferWidth = 800;
             graphics.IsFullScreen = false;
+
+            tetrisGameComponent = new TetrisGameComponent(this);
+            this.Components.Add(tetrisGameComponent);
         }
 
         /// <summary>
@@ -41,8 +45,6 @@ namespace CNALU.Games.Tetris
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            gameComponentTetris = new GameComponentTetris(this);
-            Components.Add(gameComponentTetris);
 
             base.Initialize();
         }
@@ -67,6 +69,7 @@ namespace CNALU.Games.Tetris
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
