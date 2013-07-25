@@ -30,6 +30,16 @@ namespace CNALU.Games.Tetris
         ComboBlock userControlComboBlock;
         ComboBlock previewComboBlock;
 
+        Random random;
+        int randomDirection;
+        int randomShape;
+
+        int randomLnImageNum;
+        int randomColImageNum;
+
+        int lastAutoDownTime;
+        int autoDownTime;
+
         public TetrisGameComponent(Game game)
             : base(game)
         {
@@ -44,7 +54,14 @@ namespace CNALU.Games.Tetris
             previewPanel = new Block[6, 6];
             previewPanelPosition = new Vector2(508.0F, 57.0F);
 
+            random = new Random();
 
+            randomDirection = random.Next(4);
+            randomShape = random.Next(7);
+            randomLnImageNum = random.Next(3);
+            randomColImageNum = random.Next(4);
+
+            autoDownTime = 500;
             base.Initialize();
         }
 
@@ -52,12 +69,10 @@ namespace CNALU.Games.Tetris
         {
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             gameBoxTexture = Game.Content.Load<Texture2D>("Images/gamebox");
-            blockTexture = Game.Content.Load<Texture2D>("Images/block");
+            blockTexture = Game.Content.Load<Texture2D>("Images/block_base");
 
-            userControlComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(0, 0, 30, 30)), ComboBlockShape.T, Point.Zero, gamePanel);
 
-            userControlComboBlock.SetPosition(new Point(0, 1));
-
+            SpawnComboBlock();
             base.LoadContent();
         }
 
@@ -66,6 +81,7 @@ namespace CNALU.Games.Tetris
 
             UpdateInput();
 
+            AutoDownUpdate(gameTime);
             base.Update(gameTime);
         }
 
@@ -122,12 +138,103 @@ namespace CNALU.Games.Tetris
                 userControlComboBlock.Rotate();
             }
 
-            if (newState.IsKeyDown(Keys.Down) & !oldState.IsKeyDown(Keys.Down))
+            if (newState.IsKeyDown(Keys.Down))// & !oldState.IsKeyDown(Keys.Down))
             {
                 userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1));
             }
 
             oldState = newState;
+        }
+
+        ComboBlock CreateRandomComboBlock(IBlock block)
+        {
+            ComboBlock comboBlock;
+
+            comboBlock = new ComboBlock(block, (ComboBlockShape)random.Next(6), new Point(previewPanel.GetLength(1) / 2 - 1, 0), previewPanel);
+
+            for (int i = 0; i < random.Next(4); i++)
+                comboBlock.Rotate();
+
+            return comboBlock;
+        }
+
+        void SpawnComboBlock()
+        {
+            userControlComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(30 * randomColImageNum, 30 * randomLnImageNum, 30, 30)), (ComboBlockShape)randomShape, new Point(gamePanel.GetLength(1) / 2 - 1, 0), gamePanel);
+            for (int i = 0; i <= randomDirection; i++)
+                userControlComboBlock.Rotate();
+
+            randomDirection = random.Next(4);
+            randomShape = random.Next(7);
+            randomLnImageNum = random.Next(3);
+            randomColImageNum = random.Next(4);
+
+            if (previewComboBlock != null)
+                previewComboBlock.Dispose();
+
+            previewComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(30 * randomColImageNum, 30 * randomLnImageNum, 30, 30)), (ComboBlockShape)randomShape, new Point(2, 2), previewPanel);
+            for (int i = 0; i <= randomDirection; i++)
+                previewComboBlock.Rotate();
+        }
+
+        void AutoDownUpdate(GameTime gameTime)
+        {
+            lastAutoDownTime += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (lastAutoDownTime >= autoDownTime)
+            {
+                lastAutoDownTime = 0;
+
+                if (!userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1)))
+                {
+                    DeleteFullLine();
+                    try 
+                    { 
+                        SpawnComboBlock(); 
+                    }
+                    catch
+                    {
+                        Initialize();
+                    }
+                }
+            }
+        }
+
+        void DeleteFullLine()
+        {
+            bool full;
+            for (int ln = 0; ln < gamePanel.GetLength(0); ln++)
+            {
+                full = true;
+                for (int col = 0; col < gamePanel.GetLength(1); col++)
+                {
+                    if (gamePanel[ln, col] == null)
+                    {
+                        full = false;
+                        break;
+                    }
+                }
+
+                if (full)
+                {
+                    // É¾³ýÐÐ
+                    for (int col = 0; col < gamePanel.GetLength(1); col++)
+                    {
+                        gamePanel[ln, col] = null;
+                    }
+
+                    // ÖØÅÅ
+
+                    for (int ln1 = ln; ln1 > 0; ln1--)
+                    {
+                        for (int col = 0; col < gamePanel.GetLength(1); col++)
+                        {
+                            gamePanel[ln1, col] = gamePanel[ln1 - 1, col];
+                        }
+                    }
+
+                }
+            }
         }
     }
 }

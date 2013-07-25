@@ -1,6 +1,7 @@
 Content\Images\bg.xnb
 Content\Images\block.xnb
 Content\Images\gamebox.xnb
+Content\Images\block_base.xnb
 Content\Audio\gameaudio.xgs
 Content\Audio\Wave Bank.xwb
 Content\Audio\Sound Bank.xsb

@@ -14,7 +14,7 @@ namespace CNALU.Games.Tetris
 {
     enum ComboBlockShape { O, T, S, Z, L, J, I }
 
-    class ComboBlock
+    class ComboBlock : IDisposable
     {
         #region SHAPE BASE DATA
         static readonly bool[][,] shapeBase = {
@@ -211,6 +211,11 @@ namespace CNALU.Games.Tetris
             comboBlock = comboBlockTmp;
             Put(lastPosition);
             return false;
+        }
+
+        public void Dispose()
+        {
+            Erasure(lastPosition);
         }
     }
 }

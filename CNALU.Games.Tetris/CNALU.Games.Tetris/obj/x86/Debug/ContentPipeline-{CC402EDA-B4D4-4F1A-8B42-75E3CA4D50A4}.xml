@@ -28,6 +28,15 @@
       <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\gamebox.xnb</Output>
       <Time>2013-07-19T02:15:01.2460937+08:00</Time>
     </Item>
+    <Item>
+      <Source>Images\block_base.png</Source>
+      <Name>Images\block_base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block_base.xnb</Output>
+      <Time>2013-07-25T17:33:57.3007812+08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{CC402EDA-B4D4-4F1A-8B42-75E3CA4D50A4}</ContentProjectGUID>

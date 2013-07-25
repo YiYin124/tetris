@@ -64,7 +64,7 @@ namespace CNALU.Games.Tetris
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            backgroundTexture = Content.Load<Texture2D>(@"Images/bg");
+            backgroundTexture = Content.Load<Texture2D>("Images/bg");
 
             audioEngine = new AudioEngine("Content/Audio/gameaudio.xgs");
             waveBank = new WaveBank(audioEngine, "Content/Audio/Wave Bank.xwb");
