@@ -25,6 +25,11 @@ namespace CNALU.Games.Tetris
         IBlock[,] previewPanel;
         Vector2 previewPanelPosition;
 
+        KeyboardState oldState;
+
+        ComboBlock userControlComboBlock;
+        ComboBlock previewComboBlock;
+
         public TetrisGameComponent(Game game)
             : base(game)
         {
@@ -49,20 +54,18 @@ namespace CNALU.Games.Tetris
             gameBoxTexture = Game.Content.Load<Texture2D>("Images/gamebox");
             blockTexture = Game.Content.Load<Texture2D>("Images/block");
 
-            ComboBlock comboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(0, 0, 30, 30)), ComboBlockShape.L, Point.Zero, gamePanel);
-            comboBlock.Put(new Point(1, 1));
-            comboBlock.Put(new Point(1, 2));
-            comboBlock.Put(new Point(1, 3));
-            comboBlock.Put(new Point(2, 12));
-            comboBlock.Put(new Point(3, 12));
-            comboBlock.Put(new Point(4, 12));
-            comboBlock.Put(new Point(6, 12));
-            comboBlock.Put(new Point(7, 12));
+            userControlComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(0, 0, 30, 30)), ComboBlockShape.T, Point.Zero, gamePanel);
+
+            userControlComboBlock.SetPosition(new Point(0, 1));
+
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
+
+            UpdateInput();
+
             base.Update(gameTime);
         }
 
@@ -98,6 +101,45 @@ namespace CNALU.Games.Tetris
                     }
                 }
             }
+        }
+
+        void UpdateInput()
+        {
+            KeyboardState newState = Keyboard.GetState();
+
+            if (newState.IsKeyDown(Keys.Left))
+            {
+                if (!oldState.IsKeyDown(Keys.Left))
+                {
+                    userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X - 1, userControlComboBlock.Position.Y));
+                }
+            }
+
+            if (newState.IsKeyDown(Keys.Right))
+            {
+                if (!oldState.IsKeyDown(Keys.Right))
+                {
+                    userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X + 1, userControlComboBlock.Position.Y));
+                }
+            }
+
+            if (newState.IsKeyDown(Keys.Up))
+            {
+                if (!oldState.IsKeyDown(Keys.Up))
+                {
+                    userControlComboBlock.Rotate();
+                }
+            }
+
+            if (newState.IsKeyDown(Keys.Down))
+            {
+                if (!oldState.IsKeyDown(Keys.Down))
+                {
+                    userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1));
+                }
+            }
+
+            oldState = newState;
         }
     }
 }

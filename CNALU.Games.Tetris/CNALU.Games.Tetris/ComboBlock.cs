@@ -55,17 +55,28 @@ namespace CNALU.Games.Tetris
 
         IBlock[,] comboBlock;
         IBlock[,] panel;
-        Point nowPosition;
         Point lastPosition;
 
-        public ComboBlock(IBlock block, ComboBlockShape shape, Point position, IBlock[,] panel)
-        {
-            comboBlock = Build(shape, block);
+        IBlock baseBlock;
 
+        public Point Position
+        {
+            get
+            {
+                return lastPosition;
+            }
+        }
+
+        public ComboBlock(IBlock baseBlock, ComboBlockShape shape, Point position, IBlock[,] panel)
+        {
+            this.baseBlock = baseBlock;
             this.panel = panel;
-            this.lastPosition = position;
-            this.nowPosition = position;
-            Put(position);
+            comboBlock = Build(shape, baseBlock);
+
+            if (PutCheck(position))
+                Put(position);
+            else
+                throw new Exception("此坐标不能创建, 已被占用或越界");
         }
 
         IBlock[,] Build(ComboBlockShape shape, IBlock block)
@@ -83,35 +94,63 @@ namespace CNALU.Games.Tetris
             return tmp;
         }
 
-        public bool Put(Point position)
+        bool Outbounds(Point position)
         {
-            // 摆放坐标越界检测
+            // 坐标越界检测
             if (position.X < 0 || position.Y < 0 || position.X + comboBlock.GetLength(1) > panel.GetLength(1) || position.Y + comboBlock.GetLength(0) > panel.GetLength(0))
+                return true;
+
+            return false;
+        }
+
+        bool PutCheck(Point position)
+        {
+            // 越界检测
+            if (Outbounds(position))
                 return false;
 
-            // 区域摆放检测
+            // 摆放检测
             for (int ln = 0; ln < comboBlock.GetLength(0); ln++)
             {
                 for (int col = 0; col < comboBlock.GetLength(1); col++)
                 {
                     if (comboBlock[ln, col] != null && panel[ln + position.Y, col + position.X] != null)
+                        // 区域摆放
                         return false;
                 }
             }
 
-            // 擦除上一次摆放区域
+            return true;
+        }
+
+        bool Erasure(Point position)
+        {
+            // 越界检测
+            if (Outbounds(position))
+                return false;
+
+            // 擦除
             for (int ln = 0; ln < comboBlock.GetLength(0); ln++)
             {
                 for (int col = 0; col < comboBlock.GetLength(1); col++)
                 {
                     if (comboBlock[ln, col] != null)
                     {
-                        panel[ln + lastPosition.Y, col + lastPosition.X] = null;
+                        panel[ln + position.Y, col + position.X] = null;
                     }
                 }
             }
 
-            // 区域摆放
+            return true;
+        }
+
+        bool Put(Point position)
+        {
+            // 越界检测
+            if (Outbounds(position))
+                return false;
+
+            // 摆放
             for (int ln = 0; ln < comboBlock.GetLength(0); ln++)
             {
                 for (int col = 0; col < comboBlock.GetLength(1); col++)
@@ -123,9 +162,55 @@ namespace CNALU.Games.Tetris
                 }
             }
 
-            lastPosition = nowPosition;
-            nowPosition = position;
+            lastPosition = position;
             return true;
+        }
+
+        public bool SetPosition(Point position)
+        {
+            // 越界检测
+            if (Outbounds(position))
+                return false;
+
+            Erasure(lastPosition);
+
+            if (PutCheck(position))
+            {
+                Put(position);
+                return true;
+            }
+
+            Put(lastPosition);
+
+            return false;
+        }
+
+        public bool Rotate()
+        {
+            IBlock[,] tmp = new IBlock[comboBlock.GetLength(1), comboBlock.GetLength(0)];
+
+            for (int col = 0; col < comboBlock.GetLength(1); col++)
+            {
+                for (int ln = comboBlock.GetLength(0) - 1; ln >= 0; ln--)
+                {
+                    tmp[col, comboBlock.GetLength(0) - 1 - ln] = comboBlock[ln, col];
+                }
+            }
+
+            Erasure(lastPosition);
+
+            IBlock[,] comboBlockTmp = comboBlock;
+            comboBlock = tmp;
+
+            if (PutCheck(lastPosition))
+            {
+                Put(lastPosition);
+                return true;
+            }
+
+            comboBlock = comboBlockTmp;
+            Put(lastPosition);
+            return false;
         }
     }
 }
