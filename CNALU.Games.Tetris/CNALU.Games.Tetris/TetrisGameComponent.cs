@@ -107,36 +107,24 @@ namespace CNALU.Games.Tetris
         {
             KeyboardState newState = Keyboard.GetState();
 
-            if (newState.IsKeyDown(Keys.Left))
+            if (newState.IsKeyDown(Keys.Left) & !oldState.IsKeyDown(Keys.Left))
             {
-                if (!oldState.IsKeyDown(Keys.Left))
-                {
-                    userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X - 1, userControlComboBlock.Position.Y));
-                }
+                userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X - 1, userControlComboBlock.Position.Y));
             }
 
-            if (newState.IsKeyDown(Keys.Right))
+            if (newState.IsKeyDown(Keys.Right) & !oldState.IsKeyDown(Keys.Right))
             {
-                if (!oldState.IsKeyDown(Keys.Right))
-                {
-                    userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X + 1, userControlComboBlock.Position.Y));
-                }
+                userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X + 1, userControlComboBlock.Position.Y));
             }
 
-            if (newState.IsKeyDown(Keys.Up))
+            if (newState.IsKeyDown(Keys.Up) & !oldState.IsKeyDown(Keys.Up))
             {
-                if (!oldState.IsKeyDown(Keys.Up))
-                {
-                    userControlComboBlock.Rotate();
-                }
+                userControlComboBlock.Rotate();
             }
 
-            if (newState.IsKeyDown(Keys.Down))
+            if (newState.IsKeyDown(Keys.Down) & !oldState.IsKeyDown(Keys.Down))
             {
-                if (!oldState.IsKeyDown(Keys.Down))
-                {
-                    userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1));
-                }
+                userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1));
             }
 
             oldState = newState;

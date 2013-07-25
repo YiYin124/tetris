@@ -23,6 +23,11 @@ namespace CNALU.Games.Tetris
 
         GameComponent tetrisGameComponent;
 
+        AudioEngine audioEngine;
+        WaveBank waveBank;
+        SoundBank soundBank;
+        Cue trackCue;
+
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -60,6 +65,13 @@ namespace CNALU.Games.Tetris
 
             // TODO: use this.Content to load your game content here
             backgroundTexture = Content.Load<Texture2D>(@"Images/bg");
+
+            audioEngine = new AudioEngine("Content/Audio/gameaudio.xgs");
+            waveBank = new WaveBank(audioEngine, "Content/Audio/Wave Bank.xwb");
+            soundBank = new SoundBank(audioEngine, "Content/Audio/Sound Bank.xsb");
+
+            trackCue = soundBank.GetCue("bgm");
+            trackCue.Play();
         }
 
         /// <summary>
@@ -84,6 +96,7 @@ namespace CNALU.Games.Tetris
                 this.Exit();
 
             // TODO: Add your update logic here
+            audioEngine.Update();
 
             base.Update(gameTime);
         }
