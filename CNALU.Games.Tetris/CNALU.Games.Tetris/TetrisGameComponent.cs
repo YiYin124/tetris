@@ -40,6 +40,16 @@ namespace CNALU.Games.Tetris
         int lastAutoDownTime;
         int autoDownTime;
 
+        // 积分项
+        public int Lines { get; private set; }
+        public int Level { get; private set; }
+        public int Score { get; private set; }
+
+        // 声音
+        AudioEngine audioEngine;
+        WaveBank waveBank;
+        SoundBank soundBank;
+
         public TetrisGameComponent(Game game)
             : base(game)
         {
@@ -61,7 +71,11 @@ namespace CNALU.Games.Tetris
             randomLnImageNum = random.Next(3);
             randomColImageNum = random.Next(4);
 
-            autoDownTime = 500;
+            Lines = 0;
+            Score = 0;
+            Level = 0;
+            autoDownTime = 1000;
+
             base.Initialize();
         }
 
@@ -69,10 +83,14 @@ namespace CNALU.Games.Tetris
         {
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
             gameBoxTexture = Game.Content.Load<Texture2D>("Images/gamebox");
-            blockTexture = Game.Content.Load<Texture2D>("Images/block_base");
-
+            blockTexture = Game.Content.Load<Texture2D>("Images/block_4");
 
             SpawnComboBlock();
+
+            audioEngine = new AudioEngine("Content/Audio/gameaudio.xgs");
+            waveBank = new WaveBank(audioEngine, "Content/Audio/Wave Bank.xwb");
+            soundBank = new SoundBank(audioEngine, "Content/Audio/Sound Bank.xsb");
+
             base.LoadContent();
         }
 
@@ -82,6 +100,9 @@ namespace CNALU.Games.Tetris
             UpdateInput();
 
             AutoDownUpdate(gameTime);
+
+            audioEngine.Update();
+
             base.Update(gameTime);
         }
 
@@ -126,16 +147,19 @@ namespace CNALU.Games.Tetris
             if (newState.IsKeyDown(Keys.Left) & !oldState.IsKeyDown(Keys.Left))
             {
                 userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X - 1, userControlComboBlock.Position.Y));
+                soundBank.PlayCue("blip");
             }
 
             if (newState.IsKeyDown(Keys.Right) & !oldState.IsKeyDown(Keys.Right))
             {
                 userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X + 1, userControlComboBlock.Position.Y));
+                soundBank.PlayCue("blip");
             }
 
             if (newState.IsKeyDown(Keys.Up) & !oldState.IsKeyDown(Keys.Up))
             {
                 userControlComboBlock.Rotate();
+                soundBank.PlayCue("blip");
             }
 
             if (newState.IsKeyDown(Keys.Down))// & !oldState.IsKeyDown(Keys.Down))
@@ -187,6 +211,8 @@ namespace CNALU.Games.Tetris
 
                 if (!userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1)))
                 {
+                    soundBank.PlayCue("ecptoma");
+
                     DeleteFullLine();
                     try 
                     { 
@@ -194,7 +220,9 @@ namespace CNALU.Games.Tetris
                     }
                     catch
                     {
+                        // Game Over
                         Initialize();
+                        soundBank.PlayCue("game_over");
                     }
                 }
             }
@@ -202,6 +230,7 @@ namespace CNALU.Games.Tetris
 
         void DeleteFullLine()
         {
+            int lines = 0;
             bool full;
             for (int ln = 0; ln < gamePanel.GetLength(0); ln++)
             {
@@ -224,7 +253,6 @@ namespace CNALU.Games.Tetris
                     }
 
                     // 重排
-
                     for (int ln1 = ln; ln1 > 0; ln1--)
                     {
                         for (int col = 0; col < gamePanel.GetLength(1); col++)
@@ -233,8 +261,19 @@ namespace CNALU.Games.Tetris
                         }
                     }
 
+                    lines++;
                 }
             }
+            this.Lines += lines;
+
+            this.Score += lines * 100;
+
+            this.Level += lines / 100;
+
+            this.autoDownTime = 1000 - Level * 100;
+
+            if (lines != 0)
+                soundBank.PlayCue("delete_line");
         }
     }
 }

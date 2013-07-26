@@ -9,8 +9,8 @@
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = &lt;none&gt;;
-    Bank Last Revised Low = 557681316;
-    Bank Last Revised High = 30312665;
+    Bank Last Revised Low = 603583487;
+    Bank Last Revised High = 30312861;
 
     Wave
     {
@@ -32,6 +32,98 @@
             File Type = 1;
             Last Modified Low = 3644416190;
             Last Modified High = 30312664;
+        }
+    }
+
+    Wave
+    {
+        Name = blip;
+        File = ..\..\..\..\..\..\..\Desktop\Tetris\music\blip.wav;
+        Build Settings Last Modified Low = 564696769;
+        Build Settings Last Modified High = 30312861;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 11025;
+            Bits Per Sample = 0;
+            Play Region Offset = 44;
+            Play Region Length = 1205;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3902684754;
+            Last Modified High = 30310952;
+        }
+    }
+
+    Wave
+    {
+        Name = delete_line;
+        File = ..\..\..\..\..\..\..\Desktop\Tetris\music\delete_line.wav;
+        Build Settings Last Modified Low = 564706534;
+        Build Settings Last Modified High = 30312861;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 75120;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2801810688;
+            Last Modified High = 29945322;
+        }
+    }
+
+    Wave
+    {
+        Name = ecptoma;
+        File = ..\..\..\..\..\..\..\Desktop\Tetris\music\ecptoma.wav;
+        Build Settings Last Modified Low = 564706534;
+        Build Settings Last Modified High = 30312861;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 11025;
+            Bits Per Sample = 0;
+            Play Region Offset = 44;
+            Play Region Length = 2500;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1091486990;
+            Last Modified High = 30310953;
+        }
+    }
+
+    Wave
+    {
+        Name = game_over;
+        File = ..\..\..\..\..\..\..\Desktop\Tetris\music\game_over.wav;
+        Build Settings Last Modified Low = 564716300;
+        Build Settings Last Modified High = 30312861;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 419846;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2801810688;
+            Last Modified High = 29945322;
         }
     }
 }

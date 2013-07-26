@@ -11,15 +11,6 @@
       <Time>2013-07-18T22:06:56.671875+08:00</Time>
     </Item>
     <Item>
-      <Source>Images\block.png</Source>
-      <Name>Images\block</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block.xnb</Output>
-      <Time>2013-07-19T02:23:26.852539+08:00</Time>
-    </Item>
-    <Item>
       <Source>Images\gamebox.png</Source>
       <Name>Images\gamebox</Name>
       <Importer>TextureImporter</Importer>
@@ -29,13 +20,58 @@
       <Time>2013-07-19T02:15:01.2460937+08:00</Time>
     </Item>
     <Item>
-      <Source>Images\block_base.png</Source>
-      <Name>Images\block_base</Name>
+      <Source>Images\block_1.png</Source>
+      <Name>Images\block_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block_base.xnb</Output>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block_1.xnb</Output>
+      <Time>2013-07-19T02:23:26.852539+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\block_2.png</Source>
+      <Name>Images\block_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block_2.xnb</Output>
+      <Time>2013-07-26T07:03:14.2871093+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\block_3.png</Source>
+      <Name>Images\block_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block_3.xnb</Output>
       <Time>2013-07-25T17:33:57.3007812+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\block_4.png</Source>
+      <Name>Images\block_4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block_4.xnb</Output>
+      <Time>2013-07-26T07:38:18.6884765+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\block_5.png</Source>
+      <Name>Images\block_5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block_5.xnb</Output>
+      <Time>2013-07-26T07:46:37.8261718+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\block_6.png</Source>
+      <Name>Images\block_6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\block_6.xnb</Output>
+      <Time>2013-07-26T07:54:50.0966796+08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

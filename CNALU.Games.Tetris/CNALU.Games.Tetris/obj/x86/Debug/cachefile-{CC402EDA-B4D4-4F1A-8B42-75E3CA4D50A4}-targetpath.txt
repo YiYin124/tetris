@@ -1,7 +1,11 @@
 Content\Images\bg.xnb
-Content\Images\block.xnb
 Content\Images\gamebox.xnb
-Content\Images\block_base.xnb
+Content\Images\block_1.xnb
+Content\Images\block_2.xnb
+Content\Images\block_3.xnb
+Content\Images\block_4.xnb
+Content\Images\block_5.xnb
+Content\Images\block_6.xnb
 Content\Audio\gameaudio.xgs
 Content\Audio\Wave Bank.xwb
 Content\Audio\Sound Bank.xsb
