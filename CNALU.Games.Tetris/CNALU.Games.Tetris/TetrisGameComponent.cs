@@ -38,7 +38,7 @@ namespace CNALU.Games.Tetris
         int randomColImageNum;
 
         int lastAutoDownTime;
-        int autoDownTime;
+        int autoDownSpanTime;
 
         // »ý·ÖÏî
         public int Lines { get; private set; }
@@ -49,6 +49,9 @@ namespace CNALU.Games.Tetris
         AudioEngine audioEngine;
         WaveBank waveBank;
         SoundBank soundBank;
+
+        int lastKeyTime;
+        int keyDownSpanTime = 50;
 
         public TetrisGameComponent(Game game)
             : base(game)
@@ -74,7 +77,7 @@ namespace CNALU.Games.Tetris
             Lines = 0;
             Score = 0;
             Level = 0;
-            autoDownTime = 1000;
+            autoDownSpanTime = 1000;
 
             base.Initialize();
         }
@@ -97,7 +100,7 @@ namespace CNALU.Games.Tetris
         public override void Update(GameTime gameTime)
         {
 
-            UpdateInput();
+            UpdateInput(gameTime);
 
             AutoDownUpdate(gameTime);
 
@@ -140,8 +143,9 @@ namespace CNALU.Games.Tetris
             }
         }
 
-        void UpdateInput()
+        void UpdateInput(GameTime gameTime)
         {
+            lastKeyTime += gameTime.ElapsedGameTime.Milliseconds;
             KeyboardState newState = Keyboard.GetState();
 
             if (newState.IsKeyDown(Keys.Left) & !oldState.IsKeyDown(Keys.Left))
@@ -162,31 +166,22 @@ namespace CNALU.Games.Tetris
                 soundBank.PlayCue("blip");
             }
 
-            if (newState.IsKeyDown(Keys.Down))// & !oldState.IsKeyDown(Keys.Down))
+            if (lastKeyTime >= keyDownSpanTime)
             {
-                userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1));
+                lastKeyTime = 0;
+
+                if (newState.IsKeyDown(Keys.Down))// & !oldState.IsKeyDown(Keys.Down))
+                {
+                    Down();
+                }
             }
 
             oldState = newState;
         }
 
-        ComboBlock CreateRandomComboBlock(IBlock block)
-        {
-            ComboBlock comboBlock;
-
-            comboBlock = new ComboBlock(block, (ComboBlockShape)random.Next(6), new Point(previewPanel.GetLength(1) / 2 - 1, 0), previewPanel);
-
-            for (int i = 0; i < random.Next(4); i++)
-                comboBlock.Rotate();
-
-            return comboBlock;
-        }
-
         void SpawnComboBlock()
         {
-            userControlComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(30 * randomColImageNum, 30 * randomLnImageNum, 30, 30)), (ComboBlockShape)randomShape, new Point(gamePanel.GetLength(1) / 2 - 1, 0), gamePanel);
-            for (int i = 0; i <= randomDirection; i++)
-                userControlComboBlock.Rotate();
+            userControlComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(30 * randomColImageNum, 30 * randomLnImageNum, 30, 30)), (ComboBlockShape)randomShape, new Point(gamePanel.GetLength(1) / 2 - 1, 0), gamePanel, randomDirection);
 
             randomDirection = random.Next(4);
             randomShape = random.Next(7);
@@ -196,35 +191,43 @@ namespace CNALU.Games.Tetris
             if (previewComboBlock != null)
                 previewComboBlock.Dispose();
 
-            previewComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(30 * randomColImageNum, 30 * randomLnImageNum, 30, 30)), (ComboBlockShape)randomShape, new Point(2, 2), previewPanel);
-            for (int i = 0; i <= randomDirection; i++)
-                previewComboBlock.Rotate();
+            previewComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(30 * randomColImageNum, 30 * randomLnImageNum, 30, 30)), (ComboBlockShape)randomShape, new Point(2, 2), previewPanel, randomDirection);
         }
 
         void AutoDownUpdate(GameTime gameTime)
         {
             lastAutoDownTime += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (lastAutoDownTime >= autoDownTime)
+            if (lastAutoDownTime >= autoDownSpanTime)
             {
-                lastAutoDownTime = 0;
+                Down();
+            }
+        }
 
-                if (!userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1)))
+        void Down()
+        {
+            lastAutoDownTime = 0;
+            userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1));
+
+            if (!userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1)))
+            {
+                soundBank.PlayCue("ecptoma");
+
+                DeleteFullLine();
+                try
                 {
-                    soundBank.PlayCue("ecptoma");
-
-                    DeleteFullLine();
-                    try 
-                    { 
-                        SpawnComboBlock(); 
-                    }
-                    catch
-                    {
-                        // Game Over
-                        Initialize();
-                        soundBank.PlayCue("game_over");
-                    }
+                    SpawnComboBlock();
                 }
+                catch
+                {
+                    // Game Over
+                    //Initialize();
+                    soundBank.PlayCue("game_over");
+                }
+            }
+            else
+            {
+                userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y - 1));
             }
         }
 
@@ -270,7 +273,7 @@ namespace CNALU.Games.Tetris
 
             this.Level += lines / 100;
 
-            this.autoDownTime = 1000 - Level * 100;
+            this.autoDownSpanTime = 1000 - Level * 100;
 
             if (lines != 0)
                 soundBank.PlayCue("delete_line");

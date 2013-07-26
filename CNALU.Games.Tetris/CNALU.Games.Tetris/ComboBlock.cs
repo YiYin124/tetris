@@ -68,10 +68,13 @@ namespace CNALU.Games.Tetris
         }
 
         public ComboBlock(IBlock baseBlock, ComboBlockShape shape, Point position, IBlock[,] panel)
+            : this(baseBlock, shape, position, panel, 0) { }
+
+        public ComboBlock(IBlock baseBlock, ComboBlockShape shape, Point position, IBlock[,] panel, int rotate)
         {
             this.baseBlock = baseBlock;
             this.panel = panel;
-            comboBlock = Build(shape, baseBlock);
+            comboBlock = Build(shape, baseBlock, rotate);
 
             if (PutCheck(position))
                 Put(position);
@@ -79,7 +82,7 @@ namespace CNALU.Games.Tetris
                 throw new Exception("此坐标不能创建, 已被占用或越界");
         }
 
-        IBlock[,] Build(ComboBlockShape shape, IBlock block)
+        IBlock[,] Build(ComboBlockShape shape, IBlock block, int rotate)
         {
             IBlock[,] tmp = new IBlock[shapeBase[(int)shape].GetLength(0), shapeBase[(int)shape].GetLength(1)];
 
@@ -91,6 +94,27 @@ namespace CNALU.Games.Tetris
                         tmp[ln, col] = block;
                 }
             }
+
+            for (int i = 0; i < rotate; i++)
+            {
+                tmp = SelfRotate(tmp);
+            }
+
+            return tmp;
+        }
+
+        IBlock[,] SelfRotate(IBlock[,] comboBlock)
+        {
+            IBlock[,] tmp = new IBlock[comboBlock.GetLength(1), comboBlock.GetLength(0)];
+
+            for (int col = 0; col < comboBlock.GetLength(1); col++)
+            {
+                for (int ln = comboBlock.GetLength(0) - 1; ln >= 0; ln--)
+                {
+                    tmp[col, comboBlock.GetLength(0) - 1 - ln] = comboBlock[ln, col];
+                }
+            }
+
             return tmp;
         }
 
