@@ -207,7 +207,6 @@ namespace CNALU.Games.Tetris
         void Down()
         {
             lastAutoDownTime = 0;
-            userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1));
 
             if (!userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1)))
             {
@@ -221,13 +220,9 @@ namespace CNALU.Games.Tetris
                 catch
                 {
                     // Game Over
-                    //Initialize();
+                    Initialize();
                     soundBank.PlayCue("game_over");
                 }
-            }
-            else
-            {
-                userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y - 1));
             }
         }
 
