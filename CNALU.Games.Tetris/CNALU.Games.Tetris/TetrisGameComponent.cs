@@ -53,6 +53,7 @@ namespace CNALU.Games.Tetris
         int lastKeyTime;
         int keyDownSpanTime = 50;
 
+
         public TetrisGameComponent(Game game)
             : base(game)
         {
@@ -99,9 +100,7 @@ namespace CNALU.Games.Tetris
 
         public override void Update(GameTime gameTime)
         {
-
             UpdateInput(gameTime);
-
             AutoDownUpdate(gameTime);
 
             audioEngine.Update();
@@ -170,7 +169,7 @@ namespace CNALU.Games.Tetris
             {
                 lastKeyTime = 0;
 
-                if (newState.IsKeyDown(Keys.Down))// & !oldState.IsKeyDown(Keys.Down))
+                if (newState.IsKeyDown(Keys.Down))
                 {
                     Down();
                 }
@@ -220,8 +219,7 @@ namespace CNALU.Games.Tetris
                 catch
                 {
                     // Game Over
-                    Initialize();
-                    soundBank.PlayCue("game_over");
+                    OnGameOver();
                 }
             }
         }
@@ -272,6 +270,12 @@ namespace CNALU.Games.Tetris
 
             if (lines != 0)
                 soundBank.PlayCue("delete_line");
+        }
+
+        void OnGameOver()
+        {
+            soundBank.PlayCue("game_over");
+            Initialize();
         }
     }
 }

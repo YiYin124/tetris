@@ -9,15 +9,15 @@
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = &lt;none&gt;;
-    Bank Last Revised Low = 603583487;
-    Bank Last Revised High = 30312861;
+    Bank Last Revised Low = 3760103455;
+    Bank Last Revised High = 30313181;
 
     Wave
     {
         Name = bgm;
-        File = ..\..\..\..\..\..\..\Desktop\Tetris\bgm.wav;
-        Build Settings Last Modified Low = 492652019;
-        Build Settings Last Modified High = 30312665;
+        File = bgm.wav;
+        Build Settings Last Modified Low = 3725220642;
+        Build Settings Last Modified High = 30313181;
 
         Cache
         {
@@ -38,9 +38,9 @@
     Wave
     {
         Name = blip;
-        File = ..\..\..\..\..\..\..\Desktop\Tetris\music\blip.wav;
-        Build Settings Last Modified Low = 564696769;
-        Build Settings Last Modified High = 30312861;
+        File = blip.wav;
+        Build Settings Last Modified Low = 3725230408;
+        Build Settings Last Modified High = 30313181;
 
         Cache
         {
@@ -61,9 +61,9 @@
     Wave
     {
         Name = delete_line;
-        File = ..\..\..\..\..\..\..\Desktop\Tetris\music\delete_line.wav;
-        Build Settings Last Modified Low = 564706534;
-        Build Settings Last Modified High = 30312861;
+        File = delete_line.wav;
+        Build Settings Last Modified Low = 3725230408;
+        Build Settings Last Modified High = 30313181;
 
         Cache
         {
@@ -84,9 +84,9 @@
     Wave
     {
         Name = ecptoma;
-        File = ..\..\..\..\..\..\..\Desktop\Tetris\music\ecptoma.wav;
-        Build Settings Last Modified Low = 564706534;
-        Build Settings Last Modified High = 30312861;
+        File = ecptoma.wav;
+        Build Settings Last Modified Low = 3725240174;
+        Build Settings Last Modified High = 30313181;
 
         Cache
         {
@@ -107,9 +107,9 @@
     Wave
     {
         Name = game_over;
-        File = ..\..\..\..\..\..\..\Desktop\Tetris\music\game_over.wav;
-        Build Settings Last Modified Low = 564716300;
-        Build Settings Last Modified High = 30312861;
+        File = game_over.wav;
+        Build Settings Last Modified Low = 3725240174;
+        Build Settings Last Modified High = 30313181;
 
         Cache
         {
