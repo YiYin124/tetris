@@ -89,7 +89,43 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\mouse.xnb</Output>
-      <Time>2013-07-28T14:41:20.1168047+08:00</Time>
+      <Time>2013-07-28T16:34:36.6343829+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\pause_menu.png</Source>
+      <Name>Images\pause_menu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\pause_menu.xnb</Output>
+      <Time>2013-07-28T15:30:29.0279375+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\start_menu.png</Source>
+      <Name>Images\start_menu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\start_menu.xnb</Output>
+      <Time>2013-07-28T15:22:04.567+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\menu.spritefont</Source>
+      <Name>Fonts\menu</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\menu.xnb</Output>
+      <Time>2013-07-28T16:05:01.7916094+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\start.spritefont</Source>
+      <Name>Fonts\start</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\start.xnb</Output>
+      <Time>2013-07-28T15:57:02.5347735+08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

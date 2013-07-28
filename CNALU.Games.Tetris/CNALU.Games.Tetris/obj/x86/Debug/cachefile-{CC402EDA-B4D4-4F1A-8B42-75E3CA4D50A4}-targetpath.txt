@@ -8,6 +8,10 @@ Content\Images\block_5.xnb
 Content\Images\block_6.xnb
 Content\Fonts\game.xnb
 Content\Images\mouse.xnb
+Content\Images\pause_menu.xnb
+Content\Images\start_menu.xnb
+Content\Fonts\menu.xnb
+Content\Fonts\start.xnb
 Content\Audio\gameaudio.xgs
 Content\Audio\Wave Bank.xwb
 Content\Audio\Sound Bank.xsb

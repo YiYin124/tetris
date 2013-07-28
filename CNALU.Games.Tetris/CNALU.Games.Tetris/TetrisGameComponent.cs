@@ -65,6 +65,7 @@ namespace CNALU.Games.Tetris
 
         enum GameState
         {
+            Start,
             Stop,
             Fall,
             Arrive,
@@ -110,7 +111,8 @@ namespace CNALU.Games.Tetris
 
             deleteLineBuffer = new IBlock[gamePanel.GetLength(1)];
 
-            gameState = GameState.Fall;
+            gameState = GameState.Start;
+
             base.Initialize();
         }
 
@@ -128,11 +130,8 @@ namespace CNALU.Games.Tetris
 
             bgmTrackCue = this.soundBank.GetCue("bgm");
 
-            bgmTrackCue.Play();
 
-            SpawnComboBlock();
 
-            
             base.LoadContent();
         }
 
@@ -142,7 +141,13 @@ namespace CNALU.Games.Tetris
             {
                 case GameState.Stop:
                     {
-
+                        break;
+                    }
+                case GameState.Start:
+                    {
+                        bgmTrackCue.Play();
+                        SpawnComboBlock();
+                        gameState = GameState.Fall;
                         break;
                     }
                 case GameState.Fall:
@@ -173,18 +178,29 @@ namespace CNALU.Games.Tetris
 
         public override void Draw(GameTime gameTime)
         {
-            // ªÊ÷∆±≥æ∞
-            spriteBatch.Begin();
-            spriteBatch.Draw(gameBoxTexture, Vector2.Zero, Color.White);
-            spriteBatch.End();
+            switch (gameState)
+            {
+                case GameState.Stop:
+                    {
+                        break;
+                    }
+                default:
+                    {
+                        // ªÊ÷∆±≥æ∞
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(gameBoxTexture, Vector2.Zero, Color.White);
+                        spriteBatch.End();
 
-            // ªÊ÷∆”Œœ∑√Ê∞Â
-            DrawPanel(gameTime, spriteBatch, gamePanel, gamePanelPosition);
+                        // ªÊ÷∆”Œœ∑√Ê∞Â
+                        DrawPanel(gameTime, spriteBatch, gamePanel, gamePanelPosition);
 
-            // ªÊ÷∆‘§¿¿√Ê∞Â
-            DrawPanel(gameTime, spriteBatch, previewPanel, previewPanelPosition);
+                        // ªÊ÷∆‘§¿¿√Ê∞Â
+                        DrawPanel(gameTime, spriteBatch, previewPanel, previewPanelPosition);
 
-            DrawGameText(spriteBatch, gameTextPosition);
+                        DrawGameText(spriteBatch, gameTextPosition);
+                        break;
+                    }
+            }
 
             base.Draw(gameTime);
         }

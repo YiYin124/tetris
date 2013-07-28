@@ -27,6 +27,30 @@ namespace CNALU.Games.Tetris
 
         Texture2D mouseTexture;
         Vector2 mousePosition;
+        Rectangle mouseRectangle;
+
+        Texture2D startMenuTexture;
+
+        SpriteFont startFont;
+        SpriteFont menuFont;
+
+        Vector2 startFontPosition;
+        Vector2 menuFontPosition;
+
+        Rectangle menu1Rectangle;
+        Rectangle menu2Rectangle;
+
+        Color menu1Color;
+        Color menu2Color;
+
+        enum GameStatus
+        {
+            Start,
+            StartGame,
+            Help,
+        }
+
+        GameStatus gameStatus;
 
         public MainGame()
         {
@@ -37,7 +61,8 @@ namespace CNALU.Games.Tetris
             graphics.PreferredBackBufferWidth = 800;
             graphics.IsFullScreen = false;
 
-            tetrisGameComponent = new TetrisGameComponent(this);
+            //tetrisGameComponent = new TetrisGameComponent(this);
+            //tetrisGameComponent.Enabled = false;
             this.Components.Add(tetrisGameComponent);
         }
 
@@ -50,6 +75,18 @@ namespace CNALU.Games.Tetris
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            startFontPosition = new Vector2(170, 100);
+
+            menuFontPosition = new Vector2(300, 380);
+
+            menu1Rectangle = new Rectangle(300, 380, 20 * 10, 20);
+
+            menu2Rectangle = new Rectangle(300, 380 + 100, 20 * 4, 20);
+
+            menu1Color = Color.Black;
+            menu2Color = Color.Black;
+
+            gameStatus = GameStatus.Start;
 
             base.Initialize();
         }
@@ -66,6 +103,10 @@ namespace CNALU.Games.Tetris
             // TODO: use this.Content to load your game content here
             backgroundTexture = Content.Load<Texture2D>("Images/bg");
             mouseTexture = Content.Load<Texture2D>("Images/mouse");
+            startMenuTexture = Content.Load<Texture2D>("Images/start_menu");
+
+            startFont = Content.Load<SpriteFont>("Fonts/start");
+            menuFont = Content.Load<SpriteFont>("Fonts/menu");
         }
 
         /// <summary>
@@ -87,7 +128,6 @@ namespace CNALU.Games.Tetris
         {
             UpdateInput(gameTime);
 
-
             base.Update(gameTime);
         }
 
@@ -99,16 +139,52 @@ namespace CNALU.Games.Tetris
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             spriteBatch.Begin();
-
             // 绘制背景
             spriteBatch.Draw(backgroundTexture, Vector2.Zero, Color.White);
 
-            // 绘制鼠标
-            spriteBatch.Draw(mouseTexture, mousePosition, Color.White);
-
             spriteBatch.End();
+
+            switch (gameStatus)
+            {
+                case GameStatus.Start:
+                    {
+                        // TODO: Add your drawing code here
+                        spriteBatch.Begin();
+
+                        // 绘制启动菜单
+                        spriteBatch.Draw(startMenuTexture, Vector2.Zero, Color.White);
+
+                        // 绘制标题
+                        spriteBatch.DrawString(startFont, "Tetris", startFontPosition, Color.Black);
+
+                        // 绘制菜单内容
+                        spriteBatch.DrawString(menuFont, "Start Game", menuFontPosition, menu1Color);
+                        spriteBatch.DrawString(menuFont, "Help", new Vector2(menuFontPosition.X, menuFontPosition.Y + 100), menu2Color);
+
+                        // 绘制鼠标
+                        spriteBatch.Draw(mouseTexture, mousePosition, Color.White);
+
+                        spriteBatch.End();
+                        break;
+                    }
+
+                case GameStatus.StartGame:
+                    {
+                        //tetrisGameComponent.Enabled = true;
+                        break;
+                    }
+
+                case GameStatus.Help:
+                    {
+                        break;
+                    }
+                default:
+                    {
+
+                    }
+                    break;
+            }
 
             base.Draw(gameTime);
         }
@@ -118,6 +194,59 @@ namespace CNALU.Games.Tetris
             KeyboardState newState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
 
+            mousePosition = new Vector2(mouseState.X, mouseState.Y);
+            mouseRectangle = new Rectangle(mouseState.X, mouseState.Y, 30, 30);
+
+            switch (gameStatus)
+            {
+                case GameStatus.Start:
+                    {
+                        if (mouseRectangle.Intersects(menu1Rectangle))
+                        {
+                            menu1Color = Color.Gray;
+
+                            if (mouseState.LeftButton == ButtonState.Pressed)
+                            {
+                                gameStatus = GameStatus.StartGame;
+                            }
+
+                        }
+                        else
+                        {
+                            menu1Color = Color.Black;
+                        }
+
+                        if (mouseRectangle.Intersects(menu2Rectangle))
+                        {
+                            menu2Color = Color.Gray;
+
+                            if (mouseState.LeftButton == ButtonState.Pressed)
+                            {
+                                gameStatus = GameStatus.Help;
+                            }
+                        }
+                        else
+                        {
+                            menu2Color = Color.Black;
+                        }
+                        break;
+                    }
+                case GameStatus.StartGame:
+                    {
+                        break;
+                    }
+                case GameStatus.Help:
+                    {
+
+                        break;
+                    }
+                default:
+                    {
+
+                        break;
+                    }
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
@@ -125,8 +254,6 @@ namespace CNALU.Games.Tetris
             {
                 graphics.ToggleFullScreen();
             }
-
-            mousePosition = new Vector2(mouseState.X, mouseState.Y);
 
             oldState = newState;
         }
