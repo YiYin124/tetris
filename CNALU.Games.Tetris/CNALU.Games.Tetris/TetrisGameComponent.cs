@@ -73,6 +73,11 @@ namespace CNALU.Games.Tetris
         GameState gameState;
 
         int nowDeleteLineID;
+        int deleteLineCount;
+
+        // 显示字体
+        SpriteFont gameFont;
+        Vector2 gameTextPosition;
 
         public TetrisGameComponent(Game game)
             : base(game)
@@ -88,6 +93,8 @@ namespace CNALU.Games.Tetris
             previewPanel = new Block[6, 6];
             previewPanelPosition = new Vector2(508.0F, 57.0F);
 
+            gameTextPosition = new Vector2(508.0F, 325.0F);
+
             random = new Random();
 
             randomDirection = random.Next(4);
@@ -97,8 +104,8 @@ namespace CNALU.Games.Tetris
 
             Lines = 0;
             Score = 0;
-            Level = 0;
-            autoFallSpanTime = 1000 - 0 * 100;
+            Level = 9;
+            autoFallSpanTime = 1000 - Level * 100;
 
             deleteLineBuffer = new IBlock[gamePanel.GetLength(1)];
 
@@ -115,6 +122,8 @@ namespace CNALU.Games.Tetris
             audioEngine = new AudioEngine("Content/Audio/gameaudio.xgs");
             waveBank = new WaveBank(audioEngine, "Content/Audio/Wave Bank.xwb");
             soundBank = new SoundBank(audioEngine, "Content/Audio/Sound Bank.xsb");
+
+            gameFont = Game.Content.Load<SpriteFont>("Fonts/game");
 
             SpawnComboBlock();
 
@@ -168,6 +177,8 @@ namespace CNALU.Games.Tetris
 
             // 绘制预览面板
             DrawPanel(gameTime, spriteBatch, previewPanel, previewPanelPosition);
+
+            DrawGameText(spriteBatch, gameTextPosition);
 
             base.Draw(gameTime);
         }
@@ -261,6 +272,7 @@ namespace CNALU.Games.Tetris
 
                 gameState = GameState.Arrive;
                 nowDeleteLineID = GetDeleteLineID();
+                Score += 10;
             }
         }
 
@@ -280,6 +292,8 @@ namespace CNALU.Games.Tetris
                         twinleCount = 0;
                         DeleteLine(nowDeleteLineID);
                         nowDeleteLineID = GetDeleteLineID();
+                        deleteLineCount++;
+                        Lines++;
                     }
                     else
                     {
@@ -305,6 +319,9 @@ namespace CNALU.Games.Tetris
                 }
                 else
                 {
+                    Score += deleteLineCount * 100;
+                    deleteLineCount = 0;
+
                     try
                     {
                         SpawnComboBlock();
@@ -357,6 +374,22 @@ namespace CNALU.Games.Tetris
             }
 
             soundBank.PlayCue("delete_line");
+        }
+
+        void DrawGameText(SpriteBatch spriteBatch, Vector2 position)
+        {
+            spriteBatch.Begin();
+
+            if (Score >= 99999999)
+                Score = 99999999;
+            if (Lines >= 99999999)
+                Lines = 99999999;
+
+            spriteBatch.DrawString(gameFont, "Score :" + Score, new Vector2(position.X - 15, position.Y), Color.Black);
+            spriteBatch.DrawString(gameFont, "Level  :" + (Level + 1), new Vector2(position.X - 10, position.Y + 60 * 1), Color.Black);
+            spriteBatch.DrawString(gameFont, "Lines :" + Lines, new Vector2(position.X - 10, position.Y + 60 * 2), Color.Black);
+
+            spriteBatch.End();
         }
     }
 }
