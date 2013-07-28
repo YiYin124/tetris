@@ -82,6 +82,15 @@
       <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\game.xnb</Output>
       <Time>2013-07-28T10:05:51.1812579+08:00</Time>
     </Item>
+    <Item>
+      <Source>Images\mouse.png</Source>
+      <Name>Images\mouse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\mouse.xnb</Output>
+      <Time>2013-07-28T14:41:20.1168047+08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{CC402EDA-B4D4-4F1A-8B42-75E3CA4D50A4}</ContentProjectGUID>

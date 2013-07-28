@@ -49,6 +49,7 @@ namespace CNALU.Games.Tetris
         AudioEngine audioEngine;
         WaveBank waveBank;
         SoundBank soundBank;
+        Cue bgmTrackCue;
 
         // ÏÂÂä°´¼üÑÓÊ±
         int lastKeyTime;
@@ -104,7 +105,7 @@ namespace CNALU.Games.Tetris
 
             Lines = 0;
             Score = 0;
-            Level = 9;
+            Level = 0;
             autoFallSpanTime = 1000 - Level * 100;
 
             deleteLineBuffer = new IBlock[gamePanel.GetLength(1)];
@@ -125,8 +126,13 @@ namespace CNALU.Games.Tetris
 
             gameFont = Game.Content.Load<SpriteFont>("Fonts/game");
 
+            bgmTrackCue = this.soundBank.GetCue("bgm");
+
+            bgmTrackCue.Play();
+
             SpawnComboBlock();
 
+            
             base.LoadContent();
         }
 

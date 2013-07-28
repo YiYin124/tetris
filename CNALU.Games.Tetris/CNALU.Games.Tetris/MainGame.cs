@@ -23,10 +23,10 @@ namespace CNALU.Games.Tetris
 
         GameComponent tetrisGameComponent;
 
-        public AudioEngine audioEngine;
-        public WaveBank waveBank;
-        public SoundBank soundBank;
-        public Cue trackCue;
+        KeyboardState oldState;
+
+        Texture2D mouseTexture;
+        Vector2 mousePosition;
 
         public MainGame()
         {
@@ -65,13 +65,7 @@ namespace CNALU.Games.Tetris
 
             // TODO: use this.Content to load your game content here
             backgroundTexture = Content.Load<Texture2D>("Images/bg");
-
-            audioEngine = new AudioEngine("Content/Audio/gameaudio.xgs");
-            waveBank = new WaveBank(audioEngine, "Content/Audio/Wave Bank.xwb");
-            soundBank = new SoundBank(audioEngine, "Content/Audio/Sound Bank.xsb");
-
-            trackCue = soundBank.GetCue("bgm");
-            trackCue.Play();
+            mouseTexture = Content.Load<Texture2D>("Images/mouse");
         }
 
         /// <summary>
@@ -91,12 +85,8 @@ namespace CNALU.Games.Tetris
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            UpdateInput(gameTime);
 
-            // TODO: Add your update logic here
-            audioEngine.Update();
 
             base.Update(gameTime);
         }
@@ -112,11 +102,33 @@ namespace CNALU.Games.Tetris
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
+            // ªÊ÷∆±≥æ∞
             spriteBatch.Draw(backgroundTexture, Vector2.Zero, Color.White);
+
+            // ªÊ÷∆ Û±Í
+            spriteBatch.Draw(mouseTexture, mousePosition, Color.White);
 
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        void UpdateInput(GameTime gameTime)
+        {
+            KeyboardState newState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();
+
+            if (newState.IsKeyDown(Keys.F11) & !oldState.IsKeyDown(Keys.F11))
+            {
+                graphics.ToggleFullScreen();
+            }
+
+            mousePosition = new Vector2(mouseState.X, mouseState.Y);
+
+            oldState = newState;
         }
     }
 }
