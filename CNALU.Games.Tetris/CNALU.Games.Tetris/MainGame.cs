@@ -23,10 +23,10 @@ namespace CNALU.Games.Tetris
 
         GameComponent tetrisGameComponent;
 
-        AudioEngine audioEngine;
-        WaveBank waveBank;
-        SoundBank soundBank;
-        Cue trackCue;
+        public AudioEngine audioEngine;
+        public WaveBank waveBank;
+        public SoundBank soundBank;
+        public Cue trackCue;
 
         public MainGame()
         {

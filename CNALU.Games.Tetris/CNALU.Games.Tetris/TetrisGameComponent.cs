@@ -37,8 +37,8 @@ namespace CNALU.Games.Tetris
         int randomLnImageNum;
         int randomColImageNum;
 
-        int lastAutoDownTime;
-        int autoDownSpanTime;
+        int lastAutoFallTime;
+        int autoFallSpanTime;
 
         // 积分项
         public int Lines { get; private set; }
@@ -50,9 +50,29 @@ namespace CNALU.Games.Tetris
         WaveBank waveBank;
         SoundBank soundBank;
 
+        // 下落按键延时
         int lastKeyTime;
-        int keyDownSpanTime = 50;
+        const int KeyDownSpanTime = 50;
 
+        // 删除满行延时
+        int lastDeleteLineTime;
+        const int DeleteLineTime = 50;
+        IBlock[] deleteLineBuffer;
+
+        int twinleCount;
+        const int TwinleNumber = 10;
+
+        enum GameState
+        {
+            Stop,
+            Fall,
+            Arrive,
+            GameOver
+        }
+
+        GameState gameState;
+
+        int nowDeleteLineID;
 
         public TetrisGameComponent(Game game)
             : base(game)
@@ -78,8 +98,11 @@ namespace CNALU.Games.Tetris
             Lines = 0;
             Score = 0;
             Level = 0;
-            autoDownSpanTime = 1000;
+            autoFallSpanTime = 1000 - 0 * 100;
 
+            deleteLineBuffer = new IBlock[gamePanel.GetLength(1)];
+
+            gameState = GameState.Fall;
             base.Initialize();
         }
 
@@ -89,22 +112,47 @@ namespace CNALU.Games.Tetris
             gameBoxTexture = Game.Content.Load<Texture2D>("Images/gamebox");
             blockTexture = Game.Content.Load<Texture2D>("Images/block_4");
 
-            SpawnComboBlock();
-
             audioEngine = new AudioEngine("Content/Audio/gameaudio.xgs");
             waveBank = new WaveBank(audioEngine, "Content/Audio/Wave Bank.xwb");
             soundBank = new SoundBank(audioEngine, "Content/Audio/Sound Bank.xsb");
+
+            SpawnComboBlock();
 
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            UpdateInput(gameTime);
-            AutoDownUpdate(gameTime);
+            switch (gameState)
+            {
+                case GameState.Stop:
+                    {
+
+                        break;
+                    }
+                case GameState.Fall:
+                    {
+                        UpdateInput(gameTime);
+                        UpdateAutoFall(gameTime);
+                        break;
+                    }
+                case GameState.Arrive:
+                    {
+                        UpdateDeleteLines(gameTime);
+                        break;
+                    }
+                case GameState.GameOver:
+                    {
+                        soundBank.PlayCue("game_over");
+                        gameState = GameState.Stop;
+                        break;
+                    }
+                default:
+                    break;
+
+            }
 
             audioEngine.Update();
-
             base.Update(gameTime);
         }
 
@@ -142,42 +190,6 @@ namespace CNALU.Games.Tetris
             }
         }
 
-        void UpdateInput(GameTime gameTime)
-        {
-            lastKeyTime += gameTime.ElapsedGameTime.Milliseconds;
-            KeyboardState newState = Keyboard.GetState();
-
-            if (newState.IsKeyDown(Keys.Left) & !oldState.IsKeyDown(Keys.Left))
-            {
-                userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X - 1, userControlComboBlock.Position.Y));
-                soundBank.PlayCue("blip");
-            }
-
-            if (newState.IsKeyDown(Keys.Right) & !oldState.IsKeyDown(Keys.Right))
-            {
-                userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X + 1, userControlComboBlock.Position.Y));
-                soundBank.PlayCue("blip");
-            }
-
-            if (newState.IsKeyDown(Keys.Up) & !oldState.IsKeyDown(Keys.Up))
-            {
-                userControlComboBlock.Rotate();
-                soundBank.PlayCue("blip");
-            }
-
-            if (lastKeyTime >= keyDownSpanTime)
-            {
-                lastKeyTime = 0;
-
-                if (newState.IsKeyDown(Keys.Down))
-                {
-                    Down();
-                }
-            }
-
-            oldState = newState;
-        }
-
         void SpawnComboBlock()
         {
             userControlComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(30 * randomColImageNum, 30 * randomLnImageNum, 30, 30)), (ComboBlockShape)randomShape, new Point(gamePanel.GetLength(1) / 2 - 1, 0), gamePanel, randomDirection);
@@ -193,44 +205,125 @@ namespace CNALU.Games.Tetris
             previewComboBlock = new ComboBlock(new Block(blockTexture, new Rectangle(30 * randomColImageNum, 30 * randomLnImageNum, 30, 30)), (ComboBlockShape)randomShape, new Point(2, 2), previewPanel, randomDirection);
         }
 
-        void AutoDownUpdate(GameTime gameTime)
+        void UpdateInput(GameTime gameTime)
         {
-            lastAutoDownTime += gameTime.ElapsedGameTime.Milliseconds;
+            lastKeyTime += gameTime.ElapsedGameTime.Milliseconds;
+            KeyboardState newState = Keyboard.GetState();
 
-            if (lastAutoDownTime >= autoDownSpanTime)
+            if (newState.IsKeyDown(Keys.Up) & !oldState.IsKeyDown(Keys.Up))
             {
-                Down();
+                if (userControlComboBlock.Rotate())
+                    soundBank.PlayCue("blip");
+            }
+
+            if (newState.IsKeyDown(Keys.Left) & !oldState.IsKeyDown(Keys.Left))
+            {
+                if (userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X - 1, userControlComboBlock.Position.Y)))
+                    soundBank.PlayCue("blip");
+            }
+
+            if (newState.IsKeyDown(Keys.Right) & !oldState.IsKeyDown(Keys.Right))
+            {
+                if (userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X + 1, userControlComboBlock.Position.Y)))
+                    soundBank.PlayCue("blip");
+            }
+
+            if (lastKeyTime >= KeyDownSpanTime)
+            {
+                lastKeyTime = 0;
+
+                if (newState.IsKeyDown(Keys.Down))
+                {
+                    Fall();
+                }
+            }
+
+            oldState = newState;
+        }
+
+        void UpdateAutoFall(GameTime gameTime)
+        {
+            lastAutoFallTime += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (lastAutoFallTime >= autoFallSpanTime)
+            {
+                Fall();
             }
         }
 
-        void Down()
+        void Fall()
         {
-            lastAutoDownTime = 0;
+            lastAutoFallTime = 0;
 
             if (!userControlComboBlock.SetPosition(new Point(userControlComboBlock.Position.X, userControlComboBlock.Position.Y + 1)))
             {
                 soundBank.PlayCue("ecptoma");
 
-                DeleteFullLine();
-                try
+                gameState = GameState.Arrive;
+                nowDeleteLineID = GetDeleteLineID();
+            }
+        }
+
+        void UpdateDeleteLines(GameTime gameTime)
+        {
+            lastDeleteLineTime += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (lastDeleteLineTime >= DeleteLineTime)
+            {
+                lastDeleteLineTime = 0;
+
+
+                if (nowDeleteLineID != -1)
                 {
-                    SpawnComboBlock();
+                    if (twinleCount == TwinleNumber)
+                    {
+                        twinleCount = 0;
+                        DeleteLine(nowDeleteLineID);
+                        nowDeleteLineID = GetDeleteLineID();
+                    }
+                    else
+                    {
+                        if (deleteLineBuffer[0] == null)
+                        {
+                            for (int col = 0; col < gamePanel.GetLength(1); col++)
+                            {
+                                deleteLineBuffer[col] = gamePanel[nowDeleteLineID, col];
+                                gamePanel[nowDeleteLineID, col] = null;
+                            }
+                        }
+                        else
+                        {
+                            for (int col = 0; col < gamePanel.GetLength(1); col++)
+                            {
+                                gamePanel[nowDeleteLineID, col] = deleteLineBuffer[col];
+                                deleteLineBuffer[col] = null;
+                            }
+                        }
+
+                        twinleCount++;
+                    }
                 }
-                catch
+                else
                 {
-                    // Game Over
-                    OnGameOver();
+                    try
+                    {
+                        SpawnComboBlock();
+                        gameState = GameState.Fall;
+                    }
+                    catch
+                    {
+                        gameState = GameState.GameOver;
+                    }
                 }
             }
         }
 
-        void DeleteFullLine()
+        int GetDeleteLineID()
         {
-            int lines = 0;
-            bool full;
             for (int ln = 0; ln < gamePanel.GetLength(0); ln++)
             {
-                full = true;
+                bool full = true;
+
                 for (int col = 0; col < gamePanel.GetLength(1); col++)
                 {
                     if (gamePanel[ln, col] == null)
@@ -241,41 +334,29 @@ namespace CNALU.Games.Tetris
                 }
 
                 if (full)
-                {
-                    // 删除行
-                    for (int col = 0; col < gamePanel.GetLength(1); col++)
-                    {
-                        gamePanel[ln, col] = null;
-                    }
-
-                    // 重排
-                    for (int ln1 = ln; ln1 > 0; ln1--)
-                    {
-                        for (int col = 0; col < gamePanel.GetLength(1); col++)
-                        {
-                            gamePanel[ln1, col] = gamePanel[ln1 - 1, col];
-                        }
-                    }
-
-                    lines++;
-                }
+                    return ln;
             }
-            this.Lines += lines;
-
-            this.Score += lines * 100;
-
-            this.Level += lines / 100;
-
-            this.autoDownSpanTime = 1000 - Level * 100;
-
-            if (lines != 0)
-                soundBank.PlayCue("delete_line");
+            return -1;
         }
 
-        void OnGameOver()
+        void DeleteLine(int ln)
         {
-            soundBank.PlayCue("game_over");
-            Initialize();
+            // 删除行
+            for (int col = 0; col < gamePanel.GetLength(1); col++)
+            {
+                gamePanel[ln, col] = null;
+            }
+
+            // 重排
+            for (int ln1 = ln; ln1 > 0; ln1--)
+            {
+                for (int col = 0; col < gamePanel.GetLength(1); col++)
+                {
+                    gamePanel[ln1, col] = gamePanel[ln1 - 1, col];
+                }
+            }
+
+            soundBank.PlayCue("delete_line");
         }
     }
 }
