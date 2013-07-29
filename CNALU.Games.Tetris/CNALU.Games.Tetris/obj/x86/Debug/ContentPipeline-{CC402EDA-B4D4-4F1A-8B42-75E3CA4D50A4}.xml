@@ -127,6 +127,42 @@
       <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\start.xnb</Output>
       <Time>2013-07-28T15:57:02.5347735+08:00</Time>
     </Item>
+    <Item>
+      <Source>Images\arrow_1.png</Source>
+      <Name>Images\arrow_1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\arrow_1.xnb</Output>
+      <Time>2013-07-29T09:50:21.552375+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\arrow_2.png</Source>
+      <Name>Images\arrow_2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\arrow_2.xnb</Output>
+      <Time>2013-07-29T09:49:59.0894844+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\set.spritefont</Source>
+      <Name>Fonts\set</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\set.xnb</Output>
+      <Time>2013-07-29T11:01:08.5582344+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\start_button.png</Source>
+      <Name>Images\start_button</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\start_button.xnb</Output>
+      <Time>2013-07-29T11:32:02.6392891+08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{CC402EDA-B4D4-4F1A-8B42-75E3CA4D50A4}</ContentProjectGUID>

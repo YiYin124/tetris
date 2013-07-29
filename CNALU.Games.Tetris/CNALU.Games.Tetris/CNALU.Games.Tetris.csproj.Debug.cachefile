@@ -12,6 +12,10 @@ Content\Images\pause_menu.xnb
 Content\Images\start_menu.xnb
 Content\Fonts\menu.xnb
 Content\Fonts\start.xnb
+Content\Images\arrow_1.xnb
+Content\Images\arrow_2.xnb
+Content\Fonts\set.xnb
+Content\Images\start_button.xnb
 Content\Audio\gameaudio.xgs
 Content\Audio\Wave Bank.xwb
 Content\Audio\Sound Bank.xsb

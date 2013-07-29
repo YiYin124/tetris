@@ -42,7 +42,7 @@ namespace CNALU.Games.Tetris
 
         // 积分项
         public int Lines { get; private set; }
-        public int Level { get; private set; }
+        public int Level { get; set; }
         public int Score { get; private set; }
 
         // 声音
@@ -106,7 +106,6 @@ namespace CNALU.Games.Tetris
 
             Lines = 0;
             Score = 0;
-            Level = 0;
             autoFallSpanTime = 1000 - Level * 100;
 
             deleteLineBuffer = new IBlock[gamePanel.GetLength(1)];
@@ -163,6 +162,7 @@ namespace CNALU.Games.Tetris
                     }
                 case GameState.GameOver:
                     {
+                        bgmTrackCue.Stop(AudioStopOptions.AsAuthored);
                         soundBank.PlayCue("game_over");
                         gameState = GameState.Stop;
                         break;
@@ -178,29 +178,19 @@ namespace CNALU.Games.Tetris
 
         public override void Draw(GameTime gameTime)
         {
-            switch (gameState)
-            {
-                case GameState.Stop:
-                    {
-                        break;
-                    }
-                default:
-                    {
-                        // 绘制背景
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(gameBoxTexture, Vector2.Zero, Color.White);
-                        spriteBatch.End();
 
-                        // 绘制游戏面板
-                        DrawPanel(gameTime, spriteBatch, gamePanel, gamePanelPosition);
+            // 绘制背景
+            spriteBatch.Begin();
+            spriteBatch.Draw(gameBoxTexture, Vector2.Zero, Color.White);
+            spriteBatch.End();
 
-                        // 绘制预览面板
-                        DrawPanel(gameTime, spriteBatch, previewPanel, previewPanelPosition);
+            // 绘制游戏面板
+            DrawPanel(gameTime, spriteBatch, gamePanel, gamePanelPosition);
 
-                        DrawGameText(spriteBatch, gameTextPosition);
-                        break;
-                    }
-            }
+            // 绘制预览面板
+            DrawPanel(gameTime, spriteBatch, previewPanel, previewPanelPosition);
+
+            DrawGameText(spriteBatch, gameTextPosition);
 
             base.Draw(gameTime);
         }
