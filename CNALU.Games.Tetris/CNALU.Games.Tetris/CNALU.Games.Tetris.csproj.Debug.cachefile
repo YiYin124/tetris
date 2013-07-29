@@ -1,3 +1,4 @@
+Content\Images\mouse.xnb
 Content\Images\bg.xnb
 Content\Images\gamebox.xnb
 Content\Images\block_1.xnb
@@ -6,18 +7,18 @@ Content\Images\block_3.xnb
 Content\Images\block_4.xnb
 Content\Images\block_5.xnb
 Content\Images\block_6.xnb
-Content\Fonts\game.xnb
-Content\Images\mouse.xnb
 Content\Images\pause_menu.xnb
 Content\Images\start_menu.xnb
-Content\Fonts\menu.xnb
-Content\Fonts\start.xnb
 Content\Images\arrow_1.xnb
 Content\Images\arrow_2.xnb
-Content\Fonts\set.xnb
 Content\Images\start_button.xnb
 Content\Images\game_menu.xnb
+Content\Fonts\game.xnb
+Content\Fonts\menu.xnb
+Content\Fonts\start.xnb
+Content\Fonts\set.xnb
 Content\Fonts\game_over.xnb
+Content\Images\help.xnb
 Content\Audio\gameaudio.xgs
 Content\Audio\Wave Bank.xwb
 Content\Audio\Sound Bank.xsb

@@ -27,3 +27,8 @@ C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNA
 C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\start_button.xnb
 C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\game_menu.xnb
 C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\game_over.xnb
+C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\CNALU.Games.Tetris.exe.manifest
+C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\CNALU.Games.Tetris.application
+C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\obj\x86\Debug\CNALU.Games.Tetris.exe.manifest
+C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\obj\x86\Debug\CNALU.Games.Tetris.application
+C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\help.xnb

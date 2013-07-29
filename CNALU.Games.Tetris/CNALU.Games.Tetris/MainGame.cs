@@ -71,6 +71,8 @@ namespace CNALU.Games.Tetris
         Rectangle gameMenu2Rectangle;
         Rectangle gameMenu3Rectangle;
 
+        Texture2D helpTexture;
+
         // …˘“Ù
         AudioEngine audioEngine;
         WaveBank waveBank;
@@ -167,6 +169,8 @@ namespace CNALU.Games.Tetris
             setFont = Content.Load<SpriteFont>("Fonts/set");
 
             gameMenuTexture = Content.Load<Texture2D>("Images/game_menu");
+
+            helpTexture = Content.Load<Texture2D>("Images/help");
 
             audioEngine = new AudioEngine("Content/Audio/gameaudio.xgs");
             waveBank = new WaveBank(audioEngine, "Content/Audio/Wave Bank.xwb");
@@ -276,6 +280,11 @@ namespace CNALU.Games.Tetris
 
                 case GameStatus.Help:
                     {
+                        spriteBatch.Begin();
+
+                        spriteBatch.Draw(helpTexture, Vector2.Zero, Color.White);
+
+                        spriteBatch.End();
                         break;
                     }
                 default:
@@ -475,7 +484,10 @@ namespace CNALU.Games.Tetris
                     }
                 case GameStatus.Help:
                     {
-
+                        if (newKeyState.IsKeyDown(Keys.Escape) & !oldKeyState.IsKeyDown(Keys.Escape))
+                        {
+                            gameStatus = GameStatus.Start;
+                        }
                         break;
                     }
                 default:

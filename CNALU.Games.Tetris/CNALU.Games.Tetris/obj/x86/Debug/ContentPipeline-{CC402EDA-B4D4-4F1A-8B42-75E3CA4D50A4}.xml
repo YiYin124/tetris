@@ -2,6 +2,15 @@
 <XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
   <Asset Type="Pipeline:BuildItemCollection">
     <Item>
+      <Source>Images\mouse.png</Source>
+      <Name>Images\mouse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\mouse.xnb</Output>
+      <Time>2013-07-28T16:34:36.6343829+08:00</Time>
+    </Item>
+    <Item>
       <Source>Images\bg.png</Source>
       <Name>Images\bg</Name>
       <Importer>TextureImporter</Importer>
@@ -74,24 +83,6 @@
       <Time>2013-07-26T07:54:50.0966796+08:00</Time>
     </Item>
     <Item>
-      <Source>Fonts\game.spritefont</Source>
-      <Name>Fonts\game</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\game.xnb</Output>
-      <Time>2013-07-28T10:05:51.1812579+08:00</Time>
-    </Item>
-    <Item>
-      <Source>Images\mouse.png</Source>
-      <Name>Images\mouse</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\mouse.xnb</Output>
-      <Time>2013-07-28T16:34:36.6343829+08:00</Time>
-    </Item>
-    <Item>
       <Source>Images\pause_menu.png</Source>
       <Name>Images\pause_menu</Name>
       <Importer>TextureImporter</Importer>
@@ -108,24 +99,6 @@
       <Options>None</Options>
       <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\start_menu.xnb</Output>
       <Time>2013-07-28T15:22:04.567+08:00</Time>
-    </Item>
-    <Item>
-      <Source>Fonts\menu.spritefont</Source>
-      <Name>Fonts\menu</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\menu.xnb</Output>
-      <Time>2013-07-28T16:05:01.7916094+08:00</Time>
-    </Item>
-    <Item>
-      <Source>Fonts\start.spritefont</Source>
-      <Name>Fonts\start</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\start.xnb</Output>
-      <Time>2013-07-28T15:57:02.5347735+08:00</Time>
     </Item>
     <Item>
       <Source>Images\arrow_1.png</Source>
@@ -146,15 +119,6 @@
       <Time>2013-07-29T09:49:59.0894844+08:00</Time>
     </Item>
     <Item>
-      <Source>Fonts\set.spritefont</Source>
-      <Name>Fonts\set</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\set.xnb</Output>
-      <Time>2013-07-29T11:01:08.5582344+08:00</Time>
-    </Item>
-    <Item>
       <Source>Images\start_button.png</Source>
       <Name>Images\start_button</Name>
       <Importer>TextureImporter</Importer>
@@ -173,6 +137,42 @@
       <Time>2013-07-29T14:01:20.1832344+08:00</Time>
     </Item>
     <Item>
+      <Source>Fonts\game.spritefont</Source>
+      <Name>Fonts\game</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\game.xnb</Output>
+      <Time>2013-07-28T10:05:51.1812579+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\menu.spritefont</Source>
+      <Name>Fonts\menu</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\menu.xnb</Output>
+      <Time>2013-07-28T16:05:01.7916094+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\start.spritefont</Source>
+      <Name>Fonts\start</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\start.xnb</Output>
+      <Time>2013-07-28T15:57:02.5347735+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\set.spritefont</Source>
+      <Name>Fonts\set</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\set.xnb</Output>
+      <Time>2013-07-29T11:01:08.5582344+08:00</Time>
+    </Item>
+    <Item>
       <Source>Fonts\game_over.spritefont</Source>
       <Name>Fonts\game_over</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -180,6 +180,15 @@
       <Options>None</Options>
       <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\game_over.xnb</Output>
       <Time>2013-07-29T15:02:43.2945625+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\help.png</Source>
+      <Name>Images\help</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\help.xnb</Output>
+      <Time>2013-07-29T15:36:34.7408516+08:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
