@@ -25,3 +25,5 @@ C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNA
 C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\arrow_2.xnb
 C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\set.xnb
 C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\start_button.xnb
+C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\game_menu.xnb
+C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\game_over.xnb

@@ -45,11 +45,11 @@ namespace CNALU.Games.Tetris
         public int Level { get; set; }
         public int Score { get; private set; }
 
+        public bool IsGameOver { get; private set; }
         // …˘“Ù
         AudioEngine audioEngine;
         WaveBank waveBank;
         SoundBank soundBank;
-        Cue bgmTrackCue;
 
         // œ¬¬‰∞¥º¸—” ±
         int lastKeyTime;
@@ -81,6 +81,8 @@ namespace CNALU.Games.Tetris
         SpriteFont gameFont;
         Vector2 gameTextPosition;
 
+        SpriteFont gameOverFont;
+
         public TetrisGameComponent(Game game)
             : base(game)
         {
@@ -89,6 +91,8 @@ namespace CNALU.Games.Tetris
 
         public override void Initialize()
         {
+            IsGameOver = false;
+
             gamePanel = new Block[15, 10];
             gamePanelPosition = new Vector2(108.0F, 57.0F);
 
@@ -126,11 +130,7 @@ namespace CNALU.Games.Tetris
             soundBank = new SoundBank(audioEngine, "Content/Audio/Sound Bank.xsb");
 
             gameFont = Game.Content.Load<SpriteFont>("Fonts/game");
-
-            bgmTrackCue = this.soundBank.GetCue("bgm");
-
-
-
+            gameOverFont = Game.Content.Load<SpriteFont>("Fonts/game_over");
             base.LoadContent();
         }
 
@@ -144,7 +144,6 @@ namespace CNALU.Games.Tetris
                     }
                 case GameState.Start:
                     {
-                        bgmTrackCue.Play();
                         SpawnComboBlock();
                         gameState = GameState.Fall;
                         break;
@@ -162,8 +161,8 @@ namespace CNALU.Games.Tetris
                     }
                 case GameState.GameOver:
                     {
-                        bgmTrackCue.Stop(AudioStopOptions.AsAuthored);
                         soundBank.PlayCue("game_over");
+                        IsGameOver = true;
                         gameState = GameState.Stop;
                         break;
                     }
@@ -179,11 +178,6 @@ namespace CNALU.Games.Tetris
         public override void Draw(GameTime gameTime)
         {
 
-            // ªÊ÷∆±≥æ∞
-            spriteBatch.Begin();
-            spriteBatch.Draw(gameBoxTexture, Vector2.Zero, Color.White);
-            spriteBatch.End();
-
             // ªÊ÷∆”Œœ∑√Ê∞Â
             DrawPanel(gameTime, spriteBatch, gamePanel, gamePanelPosition);
 
@@ -191,6 +185,19 @@ namespace CNALU.Games.Tetris
             DrawPanel(gameTime, spriteBatch, previewPanel, previewPanelPosition);
 
             DrawGameText(spriteBatch, gameTextPosition);
+
+
+            // ªÊ÷∆±≥æ∞
+            spriteBatch.Begin();
+
+            if (gameState == GameState.Stop)
+            {
+                spriteBatch.DrawString(gameOverFont, "Game Over", new Vector2(250, 200), Color.Red);
+            }
+
+            spriteBatch.Draw(gameBoxTexture, Vector2.Zero, Color.White);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -392,14 +399,14 @@ namespace CNALU.Games.Tetris
         {
             spriteBatch.Begin();
 
-            if (Score >= 99999999)
-                Score = 99999999;
-            if (Lines >= 99999999)
-                Lines = 99999999;
+            if (Score >= 9999999)
+                Score = 9999999;
+            if (Lines >= 9999999)
+                Lines = 9999999;
 
-            spriteBatch.DrawString(gameFont, "Score :" + Score, new Vector2(position.X - 15, position.Y), Color.Black);
-            spriteBatch.DrawString(gameFont, "Level  :" + (Level + 1), new Vector2(position.X - 10, position.Y + 60 * 1), Color.Black);
-            spriteBatch.DrawString(gameFont, "Lines :" + Lines, new Vector2(position.X - 10, position.Y + 60 * 2), Color.Black);
+            spriteBatch.DrawString(gameFont, "Score :" + Score, new Vector2(position.X, position.Y), Color.Black);
+            spriteBatch.DrawString(gameFont, "Level  :" + (Level + 1), new Vector2(position.X, position.Y + 60 * 1), Color.Black);
+            spriteBatch.DrawString(gameFont, "Lines :" + Lines, new Vector2(position.X, position.Y + 60 * 2), Color.Black);
 
             spriteBatch.End();
         }

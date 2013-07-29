@@ -62,6 +62,20 @@ namespace CNALU.Games.Tetris
         Rectangle startButtonRectangle;
         Color startButtonColor;
 
+        Texture2D gameMenuTexture;
+
+        Color gameMenu1Color;
+        Color gameMenu2Color;
+        Color gameMenu3Color;
+        Rectangle gameMenu1Rectangle;
+        Rectangle gameMenu2Rectangle;
+        Rectangle gameMenu3Rectangle;
+
+        // …˘“Ù
+        AudioEngine audioEngine;
+        WaveBank waveBank;
+        SoundBank soundBank;
+
         enum GameStatus
         {
             Start,
@@ -80,8 +94,6 @@ namespace CNALU.Games.Tetris
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferredBackBufferWidth = 800;
             graphics.IsFullScreen = false;
-
-            tetrisGameComponent = new TetrisGameComponent(this);
         }
 
         /// <summary>
@@ -115,6 +127,14 @@ namespace CNALU.Games.Tetris
             startButtonRectangle = new Rectangle((int)startButtonPosition.X, (int)startButtonPosition.Y, 200, 100);
             startButtonColor = Color.Black;
 
+            gameMenu1Color = Color.Black;
+            gameMenu2Color = Color.Black;
+            gameMenu3Color = Color.Black;
+
+            gameMenu1Rectangle = new Rectangle((800 - 250) / 2, 150, 250, 80);
+            gameMenu2Rectangle = new Rectangle((800 - 250) / 2, 250, 250, 80);
+            gameMenu3Rectangle = new Rectangle((800 - 250) / 2, 350, 250, 80);
+
             gameStatus = GameStatus.Start;
             base.Initialize();
         }
@@ -145,6 +165,14 @@ namespace CNALU.Games.Tetris
             startButton = Content.Load<Texture2D>("Images/start_button");
 
             setFont = Content.Load<SpriteFont>("Fonts/set");
+
+            gameMenuTexture = Content.Load<Texture2D>("Images/game_menu");
+
+            audioEngine = new AudioEngine("Content/Audio/gameaudio.xgs");
+            waveBank = new WaveBank(audioEngine, "Content/Audio/Wave Bank.xwb");
+            soundBank = new SoundBank(audioEngine, "Content/Audio/Sound Bank.xsb");
+
+            soundBank.PlayCue("bgm");
         }
 
         /// <summary>
@@ -166,6 +194,7 @@ namespace CNALU.Games.Tetris
         {
             UpdateInput(gameTime);
 
+            audioEngine.Update();
             base.Update(gameTime);
         }
 
@@ -216,7 +245,7 @@ namespace CNALU.Games.Tetris
 
                         spriteBatch.Draw(startButton, startButtonPosition, Color.White);
                         spriteBatch.DrawString(menuFont, "Start", new Vector2(startButtonPosition.X + 60, startButtonPosition.Y + 25), startButtonColor);
-
+                        spriteBatch.DrawString(menuFont, "Level", new Vector2(selectArrowPosition.X + 80, selectArrowPosition.Y - 50), Color.Black);
                         // ªÊ÷∆ Û±Í
                         spriteBatch.Draw(mouseTexture, mousePosition, Color.White);
 
@@ -226,6 +255,22 @@ namespace CNALU.Games.Tetris
                     }
                 case GameStatus.StartGame:
                     {
+                        if (!tetrisGameComponent.Enabled)
+                        {
+                            tetrisGameComponent.DrawOrder = 1;
+                            spriteBatch.Begin();
+                            spriteBatch.Draw(backgroundTexture, Vector2.Zero, Color.Gray);
+
+                            spriteBatch.Draw(gameMenuTexture, new Vector2((800 - 250) / 2, 150), Color.White);
+                            spriteBatch.DrawString(menuFont, "Contine", new Vector2((800 - 250) / 2 + 60, 150 + 25), gameMenu1Color);
+                            spriteBatch.Draw(gameMenuTexture, new Vector2((800 - 250) / 2, 250), Color.White);
+                            spriteBatch.DrawString(menuFont, "Retry", new Vector2((800 - 250) / 2 + 60, 250 + 25), gameMenu2Color);
+                            spriteBatch.Draw(gameMenuTexture, new Vector2((800 - 250) / 2, 350), Color.White);
+                            spriteBatch.DrawString(menuFont, "Back to Menu", new Vector2((800 - 250) / 2 + 25, 350 + 25), gameMenu3Color);
+
+                            spriteBatch.Draw(mouseTexture, mousePosition, Color.White);
+                            spriteBatch.End();
+                        }
                         break;
                     }
 
@@ -266,6 +311,7 @@ namespace CNALU.Games.Tetris
 
                             if ((newMouseState.LeftButton == ButtonState.Pressed) & (!(oldMouseState.LeftButton == ButtonState.Pressed)))
                             {
+                                soundBank.PlayCue("ecptoma");
                                 gameStatus = GameStatus.Set;
                             }
 
@@ -281,6 +327,7 @@ namespace CNALU.Games.Tetris
 
                             if ((newMouseState.LeftButton == ButtonState.Pressed) & (!(oldMouseState.LeftButton == ButtonState.Pressed)))
                             {
+                                soundBank.PlayCue("ecptoma");
                                 gameStatus = GameStatus.Help;
                             }
                         }
@@ -299,6 +346,7 @@ namespace CNALU.Games.Tetris
 
                             if ((newMouseState.LeftButton == ButtonState.Pressed) & (!(oldMouseState.LeftButton == ButtonState.Pressed)))
                             {
+                                soundBank.PlayCue("ecptoma");
                                 if (level > 0)
                                     level--;
                             }
@@ -314,6 +362,7 @@ namespace CNALU.Games.Tetris
 
                             if ((newMouseState.LeftButton == ButtonState.Pressed) & (!(oldMouseState.LeftButton == ButtonState.Pressed)))
                             {
+                                soundBank.PlayCue("ecptoma");
                                 if (level < 9)
                                     level++;
                             }
@@ -329,8 +378,9 @@ namespace CNALU.Games.Tetris
 
                             if ((newMouseState.LeftButton == ButtonState.Pressed) & (!(oldMouseState.LeftButton == ButtonState.Pressed)))
                             {
+                                soundBank.PlayCue("ecptoma");
+                                tetrisGameComponent = new TetrisGameComponent(this);
                                 tetrisGameComponent.Level = level;
-
                                 this.Components.Add(tetrisGameComponent);
 
                                 gameStatus = GameStatus.StartGame;
@@ -355,6 +405,72 @@ namespace CNALU.Games.Tetris
                         {
                             tetrisGameComponent.Enabled = !tetrisGameComponent.Enabled;
                         }
+
+                        if (tetrisGameComponent.IsGameOver)
+                        {
+                            if (newKeyState.GetPressedKeys().Length > 0 & (!(oldKeyState.GetPressedKeys().Length > 0)))
+                            {
+                                level = 0;
+
+                                this.Components.Remove(tetrisGameComponent);
+                                gameStatus = GameStatus.Start;
+                            }
+                        }
+
+
+                        if (!tetrisGameComponent.Enabled)
+                        {
+                            if (mouseRectangle.Intersects(gameMenu1Rectangle))
+                            {
+                                gameMenu1Color = Color.Blue;
+
+                                if ((newMouseState.LeftButton == ButtonState.Pressed) & (!(oldMouseState.LeftButton == ButtonState.Pressed)))
+                                {
+                                    soundBank.PlayCue("ecptoma");
+                                    tetrisGameComponent.Enabled = !tetrisGameComponent.Enabled;
+                                }
+                            }
+                            else
+                            {
+                                gameMenu1Color = Color.Black;
+                            }
+
+                            if (mouseRectangle.Intersects(gameMenu2Rectangle))
+                            {
+                                gameMenu2Color = Color.Blue;
+
+                                if ((newMouseState.LeftButton == ButtonState.Pressed) & (!(oldMouseState.LeftButton == ButtonState.Pressed)))
+                                {
+                                    soundBank.PlayCue("ecptoma");
+                                    this.Components.Remove(tetrisGameComponent);
+                                    tetrisGameComponent = new TetrisGameComponent(this);
+                                    tetrisGameComponent.Level = level;
+                                    this.Components.Add(tetrisGameComponent);
+                                }
+                            }
+                            else
+                            {
+                                gameMenu2Color = Color.Black;
+                            }
+
+                            if (mouseRectangle.Intersects(gameMenu3Rectangle))
+                            {
+                                gameMenu3Color = Color.Blue;
+
+                                if ((newMouseState.LeftButton == ButtonState.Pressed) & (!(oldMouseState.LeftButton == ButtonState.Pressed)))
+                                {
+                                    soundBank.PlayCue("ecptoma");
+                                    level = 0;
+                                    this.Components.Remove(tetrisGameComponent);
+                                    gameStatus = GameStatus.Start;
+                                }
+                            }
+                            else
+                            {
+                                gameMenu3Color = Color.Black;
+                            }
+                        }
+
                         break;
                     }
                 case GameStatus.Help:

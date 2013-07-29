@@ -16,6 +16,8 @@ Content\Images\arrow_1.xnb
 Content\Images\arrow_2.xnb
 Content\Fonts\set.xnb
 Content\Images\start_button.xnb
+Content\Images\game_menu.xnb
+Content\Fonts\game_over.xnb
 Content\Audio\gameaudio.xgs
 Content\Audio\Wave Bank.xwb
 Content\Audio\Sound Bank.xsb

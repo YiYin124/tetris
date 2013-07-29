@@ -163,6 +163,24 @@
       <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\start_button.xnb</Output>
       <Time>2013-07-29T11:32:02.6392891+08:00</Time>
     </Item>
+    <Item>
+      <Source>Images\game_menu.png</Source>
+      <Name>Images\game_menu</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Images\game_menu.xnb</Output>
+      <Time>2013-07-29T14:01:20.1832344+08:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\game_over.spritefont</Source>
+      <Name>Fonts\game_over</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\XQY\Documents\Visual Studio 2010\Projects\Tetris\CNALU.Games.Tetris\CNALU.Games.Tetris\bin\x86\Debug\Content\Fonts\game_over.xnb</Output>
+      <Time>2013-07-29T15:02:43.2945625+08:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{CC402EDA-B4D4-4F1A-8B42-75E3CA4D50A4}</ContentProjectGUID>
