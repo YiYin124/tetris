@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Runtime.InteropServices;
 
 namespace CNALU.Games.Tetris
 {
@@ -88,6 +89,48 @@ namespace CNALU.Games.Tetris
 
         GameStatus gameStatus;
 
+        [DllImport("user32", EntryPoint = "SetWindowLong")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
+
+        [DllImport("user32", EntryPoint = "GetWindowLong")]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        const int GWL_EXSTYLE = -20;
+        const int GWL_HINSTANCE = -6;
+        const int GWL_ID = -12;
+        const int GWL_STYLE = -16;
+        const int GWL_USERDATA = -21;
+        const int GWL_WNDPROC = -4;
+
+        const uint WS_BORDER = 0x00800000;
+        const uint WS_CAPTION = 0x00C00000;
+        const uint WS_CHILD = 0x40000000;
+        const uint WS_CHILDWINDOW = 0x40000000;
+        const uint WS_CLIPCHILDREN = 0x02000000;
+        const uint WS_CLIPSIBLINGS = 0x04000000;
+        const uint WS_DISABLED = 0x08000000;
+        const uint WS_DLGFRAME = 0x00400000;
+        const uint WS_GROUP = 0x00020000;
+        const uint WS_HSCROLL = 0x00100000;
+        const uint WS_ICONIC = 0x20000000;
+        const uint WS_MAXIMIZE = 0x01000000;
+        const uint WS_MAXIMIZEBOX = 0x00010000;
+        const uint WS_MINIMIZE = 0x20000000;
+        const uint WS_MINIMIZEBOX = 0x00020000;
+        const uint WS_OVERLAPPED = 0x00000000;
+        const uint WS_POPUP = 0x80000000;
+        const uint WS_SIZEBOX = 0x00040000;
+        const uint WS_SYSMENU = 0x00080000;
+        const uint WS_TABSTOP = 0x00010000;
+        const uint WS_THICKFRAME = 0x00040000;
+        const uint WS_TILED = 0x00000000;
+        const uint WS_TILEDWINDOW = (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+        const uint WS_VISIBLE = 0x10000000;
+        const uint WS_VSCROLL = 0x00200000;
+        const uint WS_POPUPWINDOW = (WS_POPUP | WS_BORDER | WS_SYSMENU);
+        const uint WS_OVERLAPPEDWINDOW = (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+
+
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -96,6 +139,8 @@ namespace CNALU.Games.Tetris
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferredBackBufferWidth = 800;
             graphics.IsFullScreen = false;
+
+            SetWindowLong(Window.Handle, GWL_STYLE, (uint)GetWindowLong(Window.Handle, GWL_STYLE) & (~WS_CAPTION));
         }
 
         /// <summary>
@@ -503,6 +548,7 @@ namespace CNALU.Games.Tetris
             if (newKeyState.IsKeyDown(Keys.F11) & !oldKeyState.IsKeyDown(Keys.F11))
             {
                 graphics.ToggleFullScreen();
+                SetWindowLong(Window.Handle, GWL_STYLE, (uint)GetWindowLong(Window.Handle, GWL_STYLE) & (~WS_CAPTION));
             }
 
             oldKeyState = newKeyState;
