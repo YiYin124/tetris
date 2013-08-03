@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Game.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="CNALU.Games.Tetris" version="1.0.0.0" publicKeyToken="2C8A423C4A007B4B" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="CNALU.Games.Tetris" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
     <commandLine file="CNALU.Games.Tetris.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -74,13 +74,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="CNALU.Games.Tetris.exe" size="27648">
-      <assemblyIdentity name="CNALU.Games.Tetris" version="1.0.0.0" publicKeyToken="2C8A423C4A007B4B" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="CNALU.Games.Tetris" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>5TALsjbVW5BPSzI8xKuWw7t5YKw=</dsig:DigestValue>
+        <dsig:DigestValue>rKln9wRXCuimwSpl+OSfF3F0AoM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
